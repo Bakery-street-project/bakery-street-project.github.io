@@ -1,293 +1,1273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bakery Street Project | Pioneering Autonomous Cybersecurity</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0b; color: #e4e4e7; scroll-behavior: smooth; }
-        .mono { font-family: 'Fira Code', monospace; }
-        .gradient-text {
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .prime-card {
-            background: rgba(24, 24, 27, 0.6);
-            border: 1px solid rgba(63, 63, 70, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .prime-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-            transition: 0.5s;
-        }
-        .prime-card:hover::before {
-            left: 100%;
-        }
-        .prime-card:hover {
-            border-color: #3b82f6;
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -20px rgba(59, 130, 246, 0.3);
-        }
-        .hero-glow {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.15), transparent 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-        .scanline {
-            width: 100%;
-            height: 2px;
-            background: rgba(59, 130, 246, 0.1);
-            position: absolute;
-            animation: scan 8s linear infinite;
-            z-index: 10;
-            pointer-events: none;
-        }
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-        .repo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baker Street Project — Privacy-First AI Infrastructure</title>
+  <meta name="description" content="AutomationCodex ecosystem. NVIDIA NIM cloud infrastructure. Privacy-first enterprise AI for serious builders. Founded by Kiliaan Vanvoorden." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0A0C0F;
+      --ink2: #111418;
+      --ink3: #1A1F26;
+      --gold: #C8A84B;
+      --gold2: #E8C86A;
+      --gold-dim: #7a6529;
+      --fog: #8A9099;
+      --mist: #C2C8D0;
+      --white: #F0EDE6;
+      --navy: #1A3A5C;
+      --green: #2A6B3C;
+      --red: #8B2A2A;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--ink); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    /* ── TYPOGRAPHY ── */
+    .display { font-family: 'DM Serif Display', serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--gold); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(10, 12, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(200, 168, 75, 0.15);
+      transition: border-color 0.3s;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-logo-mark {
+      width: 32px; height: 32px;
+      border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      color: var(--gold);
+      position: relative;
+    }
+    .nav-logo-mark::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: rgba(200,168,75,0.07);
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+    .nav-links a { transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      transition: all 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--ink); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%; left: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute;
+      bottom: 0; right: -5%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(26,58,92,0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; max-width: 900px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 6px 14px;
+      border: 1px solid rgba(200,168,75,0.3);
+      background: rgba(200,168,75,0.05);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+    .hero-badge::before { content: '●'; font-size: 7px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    h1.hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(52px, 7vw, 92px);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.35s ease forwards;
+    }
+    h1.hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      margin-top: 28px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--fog);
+      max-width: 560px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s ease forwards;
+    }
+
+    .hero-actions {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.65s ease forwards;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold2); color: var(--ink); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border: 1px solid rgba(200,168,75,0.35);
+      color: var(--gold);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); background: rgba(200,168,75,0.08); color: var(--gold); }
+
+    .hero-stats {
+      margin-top: 72px;
+      display: flex;
+      gap: 0;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s ease forwards;
+    }
+    .hero-stat {
+      padding: 20px 32px;
+      border-left: 1px solid rgba(200,168,75,0.2);
+    }
+    .hero-stat:first-child { padding-left: 0; border-left: none; }
+    .hero-stat-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fog);
+      margin-top: 4px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── NVIDIA BADGE STRIP ── */
+    .nvidia-strip {
+      background: var(--ink2);
+      border-top: 1px solid rgba(200,168,75,0.15);
+      border-bottom: 1px solid rgba(200,168,75,0.15);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      overflow-x: auto;
+    }
+    .nvidia-strip-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nvidia-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .nvidia-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(118, 185, 0, 0.08);
+      border: 1px solid rgba(118, 185, 0, 0.25);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #76B900;
+      white-space: nowrap;
+    }
+    .nvidia-badge::before { content: '✓'; }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 100px 48px; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 1px;
+      background: var(--gold);
+    }
+    h2.section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4vw, 54px);
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    h2.section-title em { font-style: italic; color: var(--gold); }
+    .section-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--fog);
+      max-width: 580px;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--ink2);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1200px;
+    }
+    .about-right {
+      padding-top: 20px;
+    }
+    .founder-card {
+      background: var(--ink3);
+      border: 1px solid rgba(200,168,75,0.15);
+      padding: 32px;
+      margin-top: 32px;
+      position: relative;
+    }
+    .founder-card::before {
+      content: '221B';
+      position: absolute;
+      top: -1px; right: 24px;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      letter-spacing: 0.1em;
+    }
+    .founder-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .founder-alias {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .founder-bio { font-size: 14px; color: var(--fog); line-height: 1.7; }
+    .founder-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      border: 1px solid rgba(200,168,75,0.25);
+      color: var(--gold);
+      background: rgba(200,168,75,0.05);
+    }
+
+    /* ── PRODUCTS ── */
+    #technology { background: var(--ink); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(200,168,75,0.1);
+      border: 1px solid rgba(200,168,75,0.1);
+      margin-top: 60px;
+    }
+    .product-card {
+      background: var(--ink2);
+      padding: 40px 32px;
+      position: relative;
+      transition: background 0.3s;
+      overflow: hidden;
+    }
+    .product-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover { background: var(--ink3); }
+    .product-card:hover::after { transform: scaleX(1); }
+    .product-card.featured {
+      background: linear-gradient(135deg, rgba(200,168,75,0.06) 0%, var(--ink3) 100%);
+    }
+    .product-card.featured::before {
+      content: 'FLAGSHIP';
+      position: absolute;
+      top: 20px; right: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      border: 1px solid rgba(200,168,75,0.3);
+      padding: 3px 8px;
+    }
+    .product-icon {
+      width: 44px; height: 44px;
+      border: 1px solid rgba(200,168,75,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+    .product-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .product-tech {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .product-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--fog);
+      margin-bottom: 24px;
+    }
+    .product-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+    .product-link:hover { color: var(--gold2); gap: 10px; }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { background: var(--ink2); }
+    .portfolio-list {
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid rgba(200,168,75,0.12);
+    }
+    .portfolio-item {
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding: 24px 32px;
+      border-bottom: 1px solid rgba(200,168,75,0.08);
+      transition: background 0.2s;
+    }
+    .portfolio-item:last-child { border-bottom: none; }
+    .portfolio-item:hover { background: rgba(200,168,75,0.04); }
+    .portfolio-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--white);
+    }
+    .portfolio-tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 2px 8px;
+      border: 1px solid rgba(200,168,75,0.2);
+      color: var(--gold);
+      margin-top: 4px;
+      display: inline-block;
+    }
+    .portfolio-desc {
+      font-size: 14px;
+      color: var(--fog);
+      line-height: 1.6;
+    }
+    .portfolio-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 4px 10px;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .status-active { color: #4CAF50; border: 1px solid rgba(76,175,80,0.3); background: rgba(76,175,80,0.06); }
+    .status-dev { color: var(--gold); border: 1px solid rgba(200,168,75,0.3); background: rgba(200,168,75,0.06); }
+    .status-concept { color: var(--fog); border: 1px solid rgba(138,144,153,0.3); }
+    .portfolio-github {
+      display: block;
+      margin-top: 40px;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--fog);
+      text-transform: uppercase;
+    }
+    .portfolio-github span { color: var(--gold); }
+    .portfolio-github:hover { color: var(--gold); }
+
+    /* ── PRICING ── */
+    #monetization { background: var(--ink); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .pricing-card {
+      border: 1px solid rgba(200,168,75,0.15);
+      padding: 40px 32px;
+      background: var(--ink2);
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .pricing-card:hover { border-color: rgba(200,168,75,0.4); }
+    .pricing-card.featured {
+      border-color: var(--gold);
+      background: linear-gradient(160deg, rgba(200,168,75,0.07) 0%, var(--ink2) 60%);
+    }
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      white-space: nowrap;
+    }
+    .pricing-tier {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .pricing-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .pricing-price span {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      color: var(--fog);
+      font-weight: 400;
+    }
+    .pricing-desc {
+      font-size: 14px;
+      color: var(--fog);
+      margin: 16px 0 28px;
+      line-height: 1.6;
+    }
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .pricing-features li {
+      font-size: 13px;
+      color: var(--mist);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .pricing-features li::before {
+      content: '→';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pricing-cta {
+      display: block;
+      text-align: center;
+      padding: 12px 24px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .pricing-cta-outline {
+      border: 1px solid rgba(200,168,75,0.35);
+      color: var(--gold);
+    }
+    .pricing-cta-outline:hover { background: rgba(200,168,75,0.08); border-color: var(--gold); }
+    .pricing-cta-solid {
+      background: var(--gold);
+      color: var(--ink);
+    }
+    .pricing-cta-solid:hover { background: var(--gold2); }
+
+    /* ── LAB ── */
+    #lab { background: var(--ink2); }
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .lab-card {
+      padding: 32px;
+      border: 1px solid rgba(200,168,75,0.1);
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .lab-card:hover { border-color: rgba(200,168,75,0.3); }
+    .lab-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold);
+      opacity: 0.4;
+    }
+    .lab-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .lab-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .lab-body { font-size: 14px; color: var(--fog); line-height: 1.7; }
+
+    .research-note {
+      margin-top: 48px;
+      padding: 32px 40px;
+      border: 1px solid rgba(200,168,75,0.2);
+      background: rgba(200,168,75,0.04);
+      position: relative;
+    }
+    .research-note::before {
+      content: '"';
+      position: absolute;
+      top: 16px; left: 32px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 72px;
+      color: rgba(200,168,75,0.15);
+      line-height: 1;
+    }
+    .research-note blockquote {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--mist);
+      line-height: 1.5;
+      padding-left: 20px;
+    }
+    .research-note cite {
+      display: block;
+      margin-top: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      padding-left: 20px;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--ink);
+      text-align: center;
+    }
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .contact-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+    .contact-link-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .contact-link-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+    .contact-link-value {
+      font-size: 14px;
+      color: var(--gold);
+      transition: color 0.2s;
+    }
+    .contact-link-value:hover { color: var(--gold2); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink2);
+      border-top: 1px solid rgba(200,168,75,0.15);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+    .footer-brand strong { color: var(--gold); }
+    .footer-right {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+    .footer-right a { color: var(--gold-dim); transition: color 0.2s; }
+    .footer-right a:hover { color: var(--gold); }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      section { padding: 72px 24px; }
+      #hero { padding: 100px 24px 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .lab-grid { grid-template-columns: 1fr; }
+      .portfolio-item { grid-template-columns: 1fr; gap: 8px; }
+      .hero-stats { flex-direction: column; gap: 16px; }
+      .hero-stat { border-left: none; padding-left: 0; }
+      .nvidia-strip { padding: 16px 24px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
-<body class="antialiased">
-    <div class="scanline"></div>
-    
-    <!-- Navigation -->
-    <nav class="border-b border-zinc-800 bg-black/50 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center font-bold text-white">B</div>
-                    <span class="text-xl font-extrabold tracking-tight text-white uppercase">Bakery Street <span class="text-blue-500">Project</span></span>
-                </div>
-                <div class="hidden md:flex space-x-8 text-sm font-medium text-zinc-400">
-                    <a href="#about" class="hover:text-white transition">About</a>
-                    <a href="#technology" class="hover:text-white transition">Technology</a>
-                    <a href="#portfolio" class="hover:text-white transition">Portfolio</a>
-                    <a href="#monetization" class="hover:text-white transition text-yellow-500">Monetization</a>
-                    <a href="#lab" class="hover:text-white transition">Lab</a>
-                    <a href="mailto:sherlock@bakerstreet-project.com" class="text-blue-500 hover:text-blue-400 border border-blue-500/20 px-4 py-1.5 rounded-full hover:bg-blue-500/10 transition">Contact Us</a>
-                </div>
-            </div>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <div class="nav-logo-mark">B</div>
+      Baker Street Project
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#technology">Technology</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#monetization">Plans</a></li>
+      <li><a href="#lab">Research</a></li>
+    </ul>
+    <a class="nav-cta" href="mailto:kiliaan@bakerstreetproject221b.store">Contact Us</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Baker Street Project · Hasselt, Belgium · Est. 2024</div>
+      <h1 class="hero-title display">
+        Privacy-First<br /><em>AI Infrastructure</em><br />for Serious Builders
+      </h1>
+      <p class="hero-sub">
+        The AutomationCodex ecosystem. Enterprise AI developer tooling, multi-agent research automation, and quantum-inspired optimization — all powered by NVIDIA NIM. Your data never leaves your control.
+      </p>
+      <div class="hero-actions">
+        <a href="#portfolio" class="btn-primary">Explore Projects →</a>
+        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="btn-ghost">Get in Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value display">90+</div>
+          <div class="hero-stat-label">Repositories</div>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="relative pt-32 pb-40 overflow-hidden">
-        <div class="hero-glow"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-6 uppercase tracking-wider">
-                <span>Autonomous Security Research & Advanced AI</span>
-            </div>
-            <h1 class="text-5xl md:text-8xl font-black tracking-tighter text-white mb-8">
-                Securing the <span class="gradient-text">Digital Frontier</span>
-            </h1>
-            <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed font-light">
-                Bakery Street Project is redefining cybersecurity and regulatory intelligence through multi-agent autonomous systems.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="#portfolio" class="w-full sm:w-auto px-10 py-4 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-all duration-300 transform hover:scale-105">View Projects</a>
-                <a href="#monetization" class="w-full sm:w-auto px-10 py-4 bg-zinc-900 text-white font-bold rounded-full border border-zinc-700 hover:bg-zinc-800 transition-all duration-300">Support the Mission</a>
-            </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value display">3</div>
+          <div class="hero-stat-label">Product Lines</div>
         </div>
-    </header>
-
-    <!-- Project Portfolio Section -->
-    <section id="portfolio" class="py-32 bg-zinc-950 border-y border-zinc-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-white mb-4">Project Portfolio</h2>
-                <p class="text-zinc-400">Autonomous tools and research frameworks from the Bakery Street labs.</p>
-            </div>
-            
-            <div class="repo-grid">
-                <!-- Go AI Coder -->
-                <div class="prime-card p-6 rounded-2xl">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-white">go-ai-coder</h3>
-                        <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Go</span>
-                    </div>
-                    <p class="text-zinc-400 text-sm mb-6 leading-relaxed">Enterprise-grade AI coding assistant with local processing and GitHub integration.</p>
-                    <a href="https://github.com/Bakery-street-project/go-ai-coder" class="text-blue-500 hover:text-blue-400 text-sm font-bold uppercase tracking-widest">View Repo &rarr;</a>
-                </div>
-
-                <!-- Polymorphic Research Framework -->
-                <div class="prime-card p-6 rounded-2xl">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-white">Polymorphic-Research</h3>
-                    </div>
-                    <p class="text-zinc-400 text-sm mb-6 leading-relaxed">Fully private, auto-adaptive multi-agent research environment with enterprise security.</p>
-                    <a href="https://github.com/Bakery-street-project/Polymorphic-Research-Framework" class="text-blue-500 hover:text-blue-400 text-sm font-bold uppercase tracking-widest">View Repo &rarr;</a>
-                </div>
-
-                <!-- AI Coding Agents -->
-                <div class="prime-card p-6 rounded-2xl">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-white">ai-coding-agents</h3>
-                        <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Go</span>
-                    </div>
-                    <p class="text-zinc-400 text-sm mb-6 leading-relaxed">Complete AI coding agent ecosystem for production-ready developer workflows.</p>
-                    <a href="https://github.com/Bakery-street-project/ai-coding-agents" class="text-blue-500 hover:text-blue-400 text-sm font-bold uppercase tracking-widest">View Repo &rarr;</a>
-                </div>
-
-                <!-- Terminal 221b -->
-                <div class="prime-card p-6 rounded-2xl">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-white">Terminal 221b</h3>
-                    </div>
-                    <p class="text-zinc-400 text-sm mb-6 leading-relaxed">The flagship multi-agent autonomous security researcher framework.</p>
-                    <a href="https://github.com/Bakery-street-project/Terminal221b" class="text-blue-500 hover:text-blue-400 text-sm font-bold uppercase tracking-widest">View Repo &rarr;</a>
-                </div>
-            </div>
-            
-            <div class="mt-12 text-center">
-                <a href="https://github.com/Bakery-street-project" class="inline-flex items-center text-zinc-500 hover:text-white transition">
-                    <span class="mr-2">Explore all 50+ repositories on GitHub</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                </a>
-            </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value display">NVIDIA</div>
+          <div class="hero-stat-label">NIM Certified</div>
         </div>
-    </section>
-
-    <!-- Monetization Section -->
-    <section id="monetization" class="py-32 bg-black overflow-hidden relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-white mb-4">Support the Frontier</h2>
-                <p class="text-zinc-400">Enable the development of autonomous intelligence through Stripe or GitHub Sponsorships.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Basic Tier -->
-                <div class="prime-card p-8 rounded-3xl border-zinc-800">
-                    <h3 class="text-xl font-bold text-white mb-2">Community Supporter</h3>
-                    <div class="text-3xl font-black text-blue-500 mb-6">$10 <span class="text-sm text-zinc-500 font-normal">/ month</span></div>
-                    <ul class="text-sm text-zinc-400 space-y-4 mb-8">
-                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Supporter Badge on GitHub</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Access to private Discord channels</li>
-                    </ul>
-                    <a href="https://buy.stripe.com/placeholder_basic" class="block text-center py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition">Subscribe via Stripe</a>
-                </div>
-
-                <!-- Professional Tier -->
-                <div class="prime-card p-8 rounded-3xl border-blue-500/50 scale-105 bg-blue-500/5 shadow-[0_0_50px_rgba(59,130,246,0.1)]">
-                    <div class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-widest">Popular</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Researcher Tier</h3>
-                    <div class="text-3xl font-black text-blue-500 mb-6">$49 <span class="text-sm text-zinc-500 font-normal">/ month</span></div>
-                    <ul class="text-sm text-zinc-400 space-y-4 mb-8">
-                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Priority access to new research</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Beta testing for PrimeCores v3</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Technical support for setup</li>
-                    </ul>
-                    <a href="https://buy.stripe.com/placeholder_research" class="block text-center py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition">Subscribe via Stripe</a>
-                </div>
-
-                <!-- Enterprise Tier -->
-                <div class="prime-card p-8 rounded-3xl border-zinc-800">
-                    <h3 class="text-xl font-bold text-white mb-2">Enterprise Partner</h3>
-                    <div class="text-3xl font-black text-blue-500 mb-6">Contact Us</div>
-                    <ul class="text-sm text-zinc-400 space-y-4 mb-8">
-                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Custom agent development</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> On-premise deployment</li>
-                    </ul>
-                    <a href="mailto:sherlock@bakerstreet-project.com" class="block text-center py-3 border border-zinc-700 hover:bg-zinc-800 text-white font-bold rounded-xl transition">Contact Sales</a>
-                </div>
-            </div>
-            
-            <div class="mt-12 text-center">
-                <a href="https://github.com/sponsors/Bakery-street-project" class="inline-flex items-center px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-full transition shadow-lg shadow-pink-600/20">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
-                    Sponsor on GitHub
-                </a>
-            </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value display">ORCID</div>
+          <div class="hero-stat-label">Researcher</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Lab / Tools Section -->
-    <section id="lab" class="py-32 bg-zinc-950 border-t border-zinc-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-20 items-center">
-                <div>
-                    <h2 class="text-4xl font-bold text-white mb-8">Specialized Lab & Tools</h2>
-                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">
-                        Beyond security, our labs innovate in AWS Bedrock orchestration and Location Services integration.
-                    </p>
-                    <div class="space-y-6">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-500 font-bold shrink-0">AWS</div>
-                            <div>
-                                <h4 class="text-white font-bold">Bedrock Orchestration</h4>
-                                <p class="text-sm text-zinc-500">Optimized multi-model orchestration for enterprise AI workloads using Anthropic and Meta models.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-4">
-                            <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-500 font-bold shrink-0">LOC</div>
-                            <div>
-                                <h4 class="text-white font-bold">Location Intelligence</h4>
-                                <p class="text-sm text-zinc-500">Advanced geospatial risk analysis integrated with real-time financial data streams.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-zinc-900/50 rounded-3xl border border-zinc-800 p-10">
-                    <h3 class="text-xl font-bold text-white mb-6">Documentation Hub</h3>
-                    <p class="text-zinc-400 mb-8">Access the complete technical specifications and deployment guides for our frameworks.</p>
-                    <div class="grid grid-cols-1 gap-4">
-                        <a href="/docs/polymorphic-research" class="flex justify-between items-center p-4 bg-black/40 rounded-xl border border-zinc-800 hover:border-blue-500 transition">
-                            <span class="text-sm font-bold text-white uppercase">Polymorphic Research Spec</span>
-                            <span class="text-xs text-blue-500">Docs &rarr;</span>
-                        </a>
-                        <a href="/docs/ai-coding-agents" class="flex justify-between items-center p-4 bg-black/40 rounded-xl border border-zinc-800 hover:border-blue-500 transition">
-                            <span class="text-sm font-bold text-white uppercase">AI Coding Agents API</span>
-                            <span class="text-xs text-blue-500">Docs &rarr;</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- NVIDIA STRIP -->
+  <div class="nvidia-strip">
+    <span class="nvidia-strip-label">Credentials</span>
+    <div class="nvidia-badges">
+      <span class="nvidia-badge">NVIDIA Developer Program Member</span>
+      <span class="nvidia-badge">NVIDIA NIM API Approved</span>
+      <span class="nvidia-badge">NVIDIA Inception Eligible</span>
+      <span class="nvidia-badge">NVIDIA Deep Learning Institute</span>
+      <span class="nvidia-badge">GitHub Developer Program</span>
+    </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="py-20 border-t border-zinc-900 bg-black">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
-                <div class="flex items-center space-x-2 mb-6 md:mb-0">
-                    <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold text-white text-xs">B</div>
-                    <span class="text-lg font-bold text-white uppercase tracking-tighter">Bakery Street Project</span>
-                </div>
-                <div class="flex space-x-12 text-xs text-zinc-500 mono uppercase tracking-widest">
-                    <a href="#about" class="hover:text-white transition">About</a>
-                    <a href="#portfolio" class="hover:text-white transition">Portfolio</a>
-                    <a href="#monetization" class="hover:text-white transition">Monetization</a>
-                    <a href="mailto:sherlock@bakerstreet-project.com" class="hover:text-white transition">Contact</a>
-                </div>
-            </div>
-            <div class="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center text-[9px] mono text-zinc-600 uppercase tracking-[0.2em]">
-                <p>© 2026 BAKERY STREET PROJECT | PIONEERING AUTONOMOUS CYBERSECURITY</p>
-                <p class="mt-4 md:mt-0">Applying for Google for Startups Cloud Program</p>
-            </div>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid reveal">
+      <div class="about-left">
+        <div class="section-label">About</div>
+        <h2 class="section-title display">Built on the<br /><em>Baker Street</em><br />Principle</h2>
+        <p class="section-body">
+          Like Sherlock Holmes at 221B, Baker Street Project approaches every hard problem with systematic reasoning, unconventional methods, and the conviction that no challenge is truly unsolvable. We build AI infrastructure that doesn't compromise on privacy, performance, or ambition.
+        </p>
+        <p class="section-body" style="margin-top:16px;">
+          Automation-first. Privacy-native. Enterprise-grade. NVIDIA-powered. We are building the tooling layer that lets serious organizations deploy frontier AI on their own terms.
+        </p>
+      </div>
+      <div class="about-right">
+        <div class="founder-card">
+          <div class="founder-name display">Kiliaan Vanvoorden</div>
+          <div class="founder-alias mono">— aka BoozeLee</div>
+          <p class="founder-bio">
+            AI Training Specialist, AutomationCodex creator, and founder of Baker Street Project. Self-taught developer who in two years built a 90+ repository portfolio spanning enterprise AI tooling, multi-agent research systems, quantum-inspired optimization, and privacy-first cloud infrastructure. ORCID-registered researcher applying AI to disease, climate, and scientific discovery.
+          </p>
+          <div class="founder-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Go</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">NVIDIA NIM</span>
+            <span class="tag">Ollama</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Android AI</span>
+            <span class="tag">Multi-Agent</span>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGY -->
+  <section id="technology">
+    <div class="section-label reveal">Technology</div>
+    <h2 class="section-title display reveal">The <em>AutomationCodex</em><br />Ecosystem</h2>
+    <p class="section-body reveal">Three interlocking product lines. One unified infrastructure. Zero data egress.</p>
+    <div class="products-grid reveal">
+
+      <div class="product-card featured">
+        <div class="product-icon">⚡</div>
+        <div class="product-name">AutomationCodex + NVIDIA NIM</div>
+        <div class="product-tech mono">NVIDIA NIM · Cloud Infrastructure</div>
+        <p class="product-desc">The most developed Baker Street asset. An approved NVIDIA NIM cloud backend powering optimized AI model inference, containerized deployment, and performance analysis. The engine behind everything we build.</p>
+        <a href="https://github.com/BoozeLee" class="product-link" target="_blank">GitHub →</a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">🤖</div>
+        <div class="product-name">go-ai-coder</div>
+        <div class="product-tech mono">Go · Ollama · GitHub API</div>
+        <p class="product-desc">Enterprise-grade AI coding assistant with local AI processing. GitHub integration, web scraping, CI/CD automation. Unlike Copilot — your code never leaves your machine.</p>
+        <a href="https://github.com/Bakery-street-project/go-ai-coder" class="product-link" target="_blank">View Repo →</a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">🔬</div>
+        <div class="product-name">Polymorphic Research Framework</div>
+        <div class="product-tech mono">Python · Multi-Agent · Enterprise Security</div>
+        <p class="product-desc">Fully private, auto-adaptive multi-agent research environment. Decomposes complex scientific, regulatory, and commercial problems into coordinated autonomous agent workflows.</p>
+        <a href="https://github.com/Bakery-street-project/Polymorphic-Research-Framework" class="product-link" target="_blank">View Repo →</a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">⚛️</div>
+        <div class="product-name">QaaS Platform</div>
+        <div class="product-tech mono">Python · Quantum-Inspired · White-Label</div>
+        <p class="product-desc">Quantum-Inspired Optimization as a Service. Mathematical optimization for logistics, financial modeling, and scientific computation. Enterprise pricing: $2,999/month.</p>
+        <a href="https://github.com/BoozeLee/qaas-platform" class="product-link" target="_blank">View Repo →</a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">🔒</div>
+        <div class="product-name">CloudyMcCodeFace</div>
+        <div class="product-tech mono">Privacy-First UI · Zero Data Egress</div>
+        <p class="product-desc">Privacy-first AI coding assistant with enterprise-grade UI. The user-facing layer of AutomationCodex — powerful AI development tooling with no cloud dependency.</p>
+        <a href="https://github.com/Bakery-street-project/CloudyMcCodeFace" class="product-link" target="_blank">View Repo →</a>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">🛡️</div>
+        <div class="product-name">ubuntu-live-security</div>
+        <div class="product-tech mono">Shell · Linux · Security Hardening</div>
+        <p class="product-desc">Linux security hardening toolkit for Ubuntu. Hardens development environments for sensitive AI workloads and private research operations. Privacy by default.</p>
+        <a href="https://github.com/BoozeLee/ubuntu-live-security" class="product-link" target="_blank">View Repo →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="section-label reveal">Portfolio</div>
+    <h2 class="section-title display reveal">All <em>Projects</em></h2>
+    <p class="section-body reveal">Public-facing repositories. The majority of active development occurs in private.</p>
+    <div class="portfolio-list reveal">
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">NVIDIA NIM Cloud Service</div>
+          <span class="portfolio-tech-pill mono">NVIDIA NIM · Cloud</span>
+        </div>
+        <div class="portfolio-desc">Approved NVIDIA cloud infrastructure for optimized AI model inference. Production-grade backend powering the entire ecosystem.</div>
+        <span class="portfolio-status status-active">Active</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">AutomationCodex</div>
+          <span class="portfolio-tech-pill mono">Python · TypeScript</span>
+        </div>
+        <div class="portfolio-desc">Proprietary automation framework. Self-evolving template system at the core of Baker Street Project. Powers go-ai-coder, Amphetamemes, and more.</div>
+        <span class="portfolio-status status-active">Active</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">go-ai-coder</div>
+          <span class="portfolio-tech-pill mono">Go</span>
+        </div>
+        <div class="portfolio-desc">Enterprise-grade AI coding assistant. Local AI processing, GitHub integration, web scraping. Open-source template, enterprise ready.</div>
+        <span class="portfolio-status status-active">Active</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">Polymorphic Research Framework</div>
+          <span class="portfolio-tech-pill mono">Python · Multi-Agent</span>
+        </div>
+        <div class="portfolio-desc">Fully private, auto-adaptive multi-agent research environment with enterprise security. Autonomous problem decomposition.</div>
+        <span class="portfolio-status status-dev">In Development</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">QaaS Platform</div>
+          <span class="portfolio-tech-pill mono">Python</span>
+        </div>
+        <div class="portfolio-desc">Quantum-Inspired Optimization as a Service. White-label mathematical optimization at $2,999/month enterprise tier.</div>
+        <span class="portfolio-status status-dev">In Development</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">CloudyMcCodeFace</div>
+          <span class="portfolio-tech-pill mono">Privacy-First</span>
+        </div>
+        <div class="portfolio-desc">Privacy-first AI coding assistant with zero data egress. Enterprise UI for AutomationCodex.</div>
+        <span class="portfolio-status status-dev">In Development</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">ubuntu-live-security</div>
+          <span class="portfolio-tech-pill mono">Shell / Bash</span>
+        </div>
+        <div class="portfolio-desc">Linux security hardening toolkit. Privacy-focused system hardening for AI development environments.</div>
+        <span class="portfolio-status status-active">Active</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">Amphetamemes</div>
+          <span class="portfolio-tech-pill mono">Python</span>
+        </div>
+        <div class="portfolio-desc">AI-powered psychedelic art template marketplace. Self-evolving creative automation with AutomationCodex integration.</div>
+        <span class="portfolio-status status-dev">Beta</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">Sherlockian Research Squad</div>
+          <span class="portfolio-tech-pill mono">Multi-Agent AI</span>
+        </div>
+        <div class="portfolio-desc">Multi-agent investigative research framework. Systematic mystery decomposition with structured autonomous documentation.</div>
+        <span class="portfolio-status status-concept">Concept</span>
+      </div>
+      <div class="portfolio-item">
+        <div>
+          <div class="portfolio-name">AI Coding Agents</div>
+          <span class="portfolio-tech-pill mono">Go</span>
+        </div>
+        <div class="portfolio-desc">Complete AI coding agent ecosystem. Educational workshop and production-ready framework with GitHub integration.</div>
+        <span class="portfolio-status status-concept">Reference</span>
+      </div>
+    </div>
+    <a href="https://github.com/BoozeLee" class="portfolio-github" target="_blank">
+      Explore all 90+ repositories at <span>github.com/BoozeLee</span> and <span>github.com/Bakery-street-project</span> →
+    </a>
+  </section>
+
+  <!-- PRICING -->
+  <section id="monetization">
+    <div class="section-label reveal">Plans</div>
+    <h2 class="section-title display reveal">Support the <em>Mission</em></h2>
+    <p class="section-body reveal">From open-source community to enterprise partnership. Choose your tier.</p>
+    <div class="pricing-grid reveal">
+
+      <div class="pricing-card">
+        <div class="pricing-tier mono">Developer</div>
+        <div class="pricing-price display">Free</div>
+        <p class="pricing-desc">Open-source access to go-ai-coder and core AutomationCodex. Community support via Discord and Matrix.</p>
+        <ul class="pricing-features">
+          <li>go-ai-coder open-source access</li>
+          <li>Core AutomationCodex templates</li>
+          <li>Community Discord + Matrix</li>
+          <li>GitHub issue tracker</li>
+        </ul>
+        <a href="https://github.com/Bakery-street-project" class="pricing-cta pricing-cta-outline" target="_blank">View on GitHub</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-tier mono">Professional</div>
+        <div class="pricing-price display">$299 <span>/ month</span></div>
+        <p class="pricing-desc">Full AutomationCodex suite with NVIDIA NIM inference credits and GitHub CI/CD integration.</p>
+        <ul class="pricing-features">
+          <li>Full AutomationCodex suite</li>
+          <li>NVIDIA NIM inference credits</li>
+          <li>GitHub CI/CD integration</li>
+          <li>Priority technical support</li>
+          <li>Beta access to new tools</li>
+        </ul>
+        <a href="https://github.com/sponsors/BoozeLee" class="pricing-cta pricing-cta-solid" target="_blank">Sponsor on GitHub</a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-tier mono">Enterprise</div>
+        <div class="pricing-price display">$2,999 <span>/ month</span></div>
+        <p class="pricing-desc">QaaS optimization, Polymorphic Research Engine, SLA, white-label, dedicated NIM endpoints.</p>
+        <ul class="pricing-features">
+          <li>QaaS quantum-inspired optimization</li>
+          <li>Polymorphic Research Engine access</li>
+          <li>Dedicated NVIDIA NIM endpoints</li>
+          <li>White-label licensing available</li>
+          <li>Custom agent development</li>
+          <li>On-premise deployment option</li>
+        </ul>
+        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="pricing-cta pricing-cta-outline">Contact Sales</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LAB / RESEARCH -->
+  <section id="lab">
+    <div class="section-label reveal">Research Lab</div>
+    <h2 class="section-title display reveal">Beyond the <em>Frontier</em></h2>
+    <p class="section-body reveal">Baker Street Project applies AI to the hardest unsolved problems — not just the profitable ones.</p>
+    <div class="lab-grid reveal">
+      <div class="lab-card">
+        <div class="lab-tag mono">Research Track 1</div>
+        <div class="lab-title display">Disease & Medicine</div>
+        <p class="lab-body">Applying multi-agent AI systems to disease modeling, drug discovery pattern recognition, and clinical data synthesis — targeting breakthroughs that traditional pharmaceutical R&D timelines cannot achieve.</p>
+      </div>
+      <div class="lab-card">
+        <div class="lab-tag mono">Research Track 2</div>
+        <div class="lab-title display">Climate Intelligence</div>
+        <p class="lab-body">Using quantum-inspired optimization and multi-agent simulation to model climate systems, identify intervention leverage points, and accelerate evidence-based climate response at scale.</p>
+      </div>
+      <div class="lab-card">
+        <div class="lab-tag mono">Infrastructure</div>
+        <div class="lab-title display">AWS Bedrock Orchestration</div>
+        <p class="lab-body">Optimized multi-model orchestration for enterprise AI workloads using Anthropic and Meta models via AWS Bedrock. Production-ready patterns for complex agent coordination.</p>
+      </div>
+      <div class="lab-card">
+        <div class="lab-tag mono">Infrastructure</div>
+        <div class="lab-title display">Location Intelligence</div>
+        <p class="lab-body">Advanced geospatial risk analysis integrated with real-time financial data streams. Context-aware AI that understands the physical world, not just digital signals.</p>
+      </div>
+    </div>
+    <div class="research-note reveal">
+      <blockquote>"Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world."</blockquote>
+      <cite>— The operating philosophy of Baker Street Project</cite>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <div class="section-label" style="justify-content:center;">Contact</div>
+      <h2 class="section-title display">Let's Build<br /><em>Something Real</em></h2>
+      <p class="section-body" style="margin:16px auto 0;">
+        Investor? Partner? Enterprise client? We are raising a Seed round and actively seeking collaborators who understand that the next era of AI will be won by the most trusted infrastructure — not the largest cloud.
+      </p>
+      <div class="contact-actions">
+        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="btn-primary">Send a Message →</a>
+        <a href="https://github.com/sponsors/BoozeLee" class="btn-ghost" target="_blank">Sponsor on GitHub</a>
+      </div>
+      <div class="contact-links">
+        <div class="contact-link-item">
+          <span class="contact-link-label mono">Email</span>
+          <a href="mailto:kiliaan@bakerstreetproject221b.store" class="contact-link-value">kiliaan@bakerstreetproject221b.store</a>
+        </div>
+        <div class="contact-link-item">
+          <span class="contact-link-label mono">GitHub</span>
+          <a href="https://github.com/BoozeLee" class="contact-link-value" target="_blank">github.com/BoozeLee</a>
+        </div>
+        <div class="contact-link-item">
+          <span class="contact-link-label mono">Research</span>
+          <a href="https://orcid.org/0009-0007-3851-6327" class="contact-link-value" target="_blank">ORCID 0009-0007-3851-6327</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <strong>Baker Street Project</strong> · Hasselt, Belgium · © 2026 · Pioneering Autonomous AI Infrastructure
+    </div>
+    <div class="footer-right">
+      <a href="https://github.com/Bakery-street-project" target="_blank">GitHub Org</a>
+      &nbsp;·&nbsp;
+      <a href="https://orcid.org/0009-0007-3851-6327" target="_blank">ORCID Research</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:kiliaan@bakerstreetproject221b.store">kiliaan@bakerstreetproject221b.store</a>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Stagger children inside reveal containers
+    document.querySelectorAll('.products-grid, .pricing-grid, .lab-grid, .portfolio-list').forEach(grid => {
+      const children = grid.children;
+      Array.from(children).forEach((child, i) => {
+        child.style.transitionDelay = `${i * 0.07}s`;
+        if (!child.classList.contains('reveal')) {
+          child.style.opacity = '0';
+          child.style.transform = 'translateY(16px)';
+          child.style.transition = `opacity 0.6s ease ${i * 0.07}s, transform 0.6s ease ${i * 0.07}s`;
+        }
+      });
+    });
+
+    // Trigger staggered children when parent reveals
+    const parentObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          Array.from(entry.target.children).forEach(child => {
+            child.style.opacity = '1';
+            child.style.transform = 'translateY(0)';
+          });
+          parentObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.products-grid, .pricing-grid, .lab-grid, .portfolio-list').forEach(g => parentObserver.observe(g));
+
+    // Active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 100) current = sec.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--gold)' : '';
+      });
+    });
+  </script>
 </body>
 </html>
