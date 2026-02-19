@@ -1,23 +1,15 @@
-# Auto-generated
-
-# === Custom additions ===
-.env
-.env.*
-*.log
-*.pid
-*.bak
-*.swp
-*~
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
-*.pyc
 __pycache__/
-node_modules/
+*.py[cod]
+*.egg-info/
 dist/
 build/
-*.egg-info/
-.terraform/
-*.tfstate*
-
+.venv/
+venv/
+.env
+node_modules/
+*.pem
+.env.local
