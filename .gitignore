@@ -1,15 +1,36 @@
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
+# Python
 __pycache__/
 *.py[cod]
-*.egg-info/
-dist/
-build/
 .venv/
 venv/
-.env
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / JS
 node_modules/
+.npm/
+dist/
+
+# Lua
+*.luac
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Secrets — never commit these
+.env
+.env.*
+!.env.example
 *.pem
-.env.local
+*.key
+secrets/
+
+# OS
+.DS_Store
+Thumbs.db
