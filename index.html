@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Baker Street Project — Privacy-First AI Infrastructure</title>
-  <meta name="description" content="AutomationCodex ecosystem. NVIDIA NIM cloud infrastructure. Privacy-first enterprise AI for serious builders. Founded by Kiliaan Vanvoorden." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code Enterprise Templates - Baker Street Project</title>
+  <script src="https://js.stripe.com/v3/"></script>
   <style>
     :root {
       --ink: #0A0C0F;
@@ -22,1223 +19,464 @@
       --fog: #8A9099;
       --mist: #C2C8D0;
       --white: #F0EDE6;
-      --navy: #1A3A5C;
-      --green: #2A6B3C;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       background: var(--ink);
       color: var(--white);
-      font-family: 'Syne', sans-serif;
-      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.6;
-      overflow-x: hidden;
+      padding: 40px 20px;
     }
 
-    /* ── GRAIN OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.028;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--ink); }
-    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
-
-    /* ── TYPOGRAPHY ── */
-    .display { font-family: 'DM Serif Display', serif; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
-    a { color: inherit; text-decoration: none; }
-    a:hover { color: var(--red-bright); }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 48px;
-      height: 64px;
-      background: rgba(10, 12, 15, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(200, 168, 75, 0.15);
-      transition: border-color 0.3s;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .nav-logo-mark {
-      width: 32px; height: 32px;
-      border: 1.5px solid var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'DM Serif Display', serif;
-      font-size: 16px;
-      color: var(--gold);
-      position: relative;
-    }
-    .nav-logo-mark::before {
-      content: '';
-      position: absolute;
-      inset: 3px;
-      background: rgba(200,168,75,0.07);
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--fog);
-    }
-    .nav-links a { transition: color 0.2s; }
-    .nav-links a:hover { color: var(--red-bright); }
-    .nav-cta {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 8px 20px;
-      border: 1px solid var(--red);
-      color: var(--red-bright);
-      transition: all 0.2s;
-    }
-    .nav-cta:hover { background: var(--red); color: var(--white); }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 120px 48px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-grid-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(139,42,42,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(139,42,42,0.03) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-    }
-    .hero-glow {
-      position: absolute;
-      top: 20%; left: -10%;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(139,42,42,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-glow2 {
-      position: absolute;
-      bottom: 0; right: -5%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-content { position: relative; max-width: 900px; }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      padding: 6px 14px;
-      border: 1px solid rgba(139,42,42,0.4);
-      background: rgba(139,42,42,0.08);
-      margin-bottom: 32px;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s ease forwards;
-    }
-    .hero-badge::before { content: '●'; font-size: 7px; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-    h1.hero-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(52px, 7vw, 92px);
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      opacity: 0;
-      animation: fadeUp 0.9s 0.35s ease forwards;
-    }
-    h1.hero-title em {
-      font-style: italic;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--red-bright) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      margin-top: 28px;
-      font-size: 17px;
-      line-height: 1.7;
-      color: var(--fog);
-      max-width: 560px;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.5s ease forwards;
-    }
-    .hero-actions {
-      margin-top: 48px;
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.65s ease forwards;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      background: linear-gradient(135deg, var(--red) 0%, var(--red-bright) 100%);
-      color: var(--white);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.2s;
-      box-shadow: 0 4px 12px rgba(139,42,42,0.3);
-    }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(139,42,42,0.4); }
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border: 1px solid rgba(200,168,75,0.35);
-      color: var(--gold);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.2s;
-    }
-    .btn-ghost:hover { border-color: var(--red-bright); background: rgba(139,42,42,0.08); color: var(--red-bright); }
-
-    .hero-stats {
-      margin-top: 72px;
-      display: flex;
-      gap: 0;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.8s ease forwards;
-    }
-    .hero-stat {
-      padding: 20px 32px;
-      border-left: 1px solid rgba(139,42,42,0.3);
-    }
-    .hero-stat:first-child { padding-left: 0; border-left: none; }
-    .hero-stat-value {
-      font-family: 'DM Serif Display', serif;
-      font-size: 36px;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--red-bright) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-    }
-    .hero-stat-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--fog);
-      margin-top: 4px;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── NVIDIA BADGE STRIP ── */
-    .nvidia-strip {
-      background: var(--ink2);
-      border-top: 1px solid rgba(139,42,42,0.2);
-      border-bottom: 1px solid rgba(200,168,75,0.15);
-      padding: 20px 48px;
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      overflow-x: auto;
-    }
-    .nvidia-strip-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .nvidia-badges {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .nvidia-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: rgba(118, 185, 0, 0.08);
-      border: 1px solid rgba(118, 185, 0, 0.25);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: #76B900;
-      white-space: nowrap;
-    }
-    .nvidia-badge::before { content: '✓'; }
-
-    /* ── SECTION COMMONS ── */
-    section { padding: 100px 48px; }
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .section-label::before {
-      content: '';
-      display: inline-block;
-      width: 32px; height: 1px;
-      background: var(--red);
-    }
-    h2.section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(36px, 4vw, 54px);
-      line-height: 1.1;
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-    h2.section-title em { 
-      font-style: italic; 
-      background: linear-gradient(135deg, var(--gold) 0%, var(--red-bright) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .section-body {
-      font-size: 16px;
-      line-height: 1.8;
-      color: var(--fog);
-      max-width: 580px;
-    }
-
-    /* Rest of CSS stays the same as before, but replace gold accent hover states with red */
-    #about { background: var(--ink2); }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; max-width: 1200px; }
-    .about-right { padding-top: 20px; }
-    .founder-card {
-      background: var(--ink3);
-      border: 1px solid rgba(139,42,42,0.2);
-      padding: 32px;
-      margin-top: 32px;
-      position: relative;
-    }
-    .founder-card::before {
-      content: '221B';
-      position: absolute;
-      top: -1px; right: 24px;
-      background: var(--red);
-      color: var(--white);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      letter-spacing: 0.1em;
-    }
-    .founder-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 26px;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-    .founder-alias {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--red-bright);
-      letter-spacing: 0.1em;
-      margin-bottom: 16px;
-    }
-    .founder-bio { font-size: 14px; color: var(--fog); line-height: 1.7; }
-    .founder-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-    .tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      padding: 4px 10px;
-      border: 1px solid rgba(139,42,42,0.3);
-      color: var(--red-bright);
-      background: rgba(139,42,42,0.08);
-    }
-
-    /* Updated products section */
-    #technology { background: var(--ink); }
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(139,42,42,0.15);
-      border: 1px solid rgba(139,42,42,0.15);
-      margin-top: 60px;
-    }
-    .product-card {
-      background: var(--ink2);
-      padding: 40px 32px;
-      position: relative;
-      transition: background 0.3s;
-      overflow: hidden;
-    }
-    .product-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--red) 0%, var(--gold) 100%);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .product-card:hover { background: var(--ink3); }
-    .product-card:hover::after { transform: scaleX(1); }
-    .product-card.featured {
-      background: linear-gradient(135deg, rgba(139,42,42,0.08) 0%, var(--ink3) 100%);
-    }
-    .product-card.featured::before {
-      content: 'FLAGSHIP';
-      position: absolute;
-      top: 20px; right: 20px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      color: var(--red-bright);
-      border: 1px solid rgba(139,42,42,0.4);
-      padding: 3px 8px;
-    }
-    .product-icon {
-      width: 44px; height: 44px;
-      border: 1px solid rgba(139,42,42,0.3);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      margin-bottom: 24px;
-    }
-    .product-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .product-tech {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      color: var(--red-bright);
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-    .product-desc {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--fog);
-      margin-bottom: 24px;
-    }
-    .product-link {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--red-bright);
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: gap 0.2s;
-    }
-    .product-link:hover { color: var(--gold); gap: 10px; }
-
-    /* Continue with portfolio, pricing, lab, contact, footer - same structure but red accents */
-    #portfolio { background: var(--ink2); }
-    .portfolio-list {
-      margin-top: 60px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border: 1px solid rgba(139,42,42,0.15);
-    }
-    .portfolio-item {
-      display: grid;
-      grid-template-columns: 200px 1fr auto;
-      gap: 32px;
-      align-items: center;
-      padding: 24px 32px;
-      border-bottom: 1px solid rgba(139,42,42,0.08);
-      transition: background 0.2s;
-    }
-    .portfolio-item:last-child { border-bottom: none; }
-    .portfolio-item:hover { background: rgba(139,42,42,0.05); }
-    .portfolio-name {
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--white);
-    }
-    .portfolio-tech-pill {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 2px 8px;
-      border: 1px solid rgba(139,42,42,0.25);
-      color: var(--red-bright);
-      margin-top: 4px;
-      display: inline-block;
-    }
-    .portfolio-desc {
-      font-size: 14px;
-      color: var(--fog);
-      line-height: 1.6;
-    }
-    .portfolio-status {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 4px 10px;
-      white-space: nowrap;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .status-active { color: #4CAF50; border: 1px solid rgba(76,175,80,0.3); background: rgba(76,175,80,0.06); }
-    .status-dev { color: var(--red-bright); border: 1px solid rgba(139,42,42,0.3); background: rgba(139,42,42,0.06); }
-    .status-concept { color: var(--fog); border: 1px solid rgba(138,144,153,0.3); }
-    .portfolio-github {
-      display: block;
-      margin-top: 40px;
-      text-align: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      color: var(--fog);
-      text-transform: uppercase;
-    }
-    .portfolio-github span { color: var(--red-bright); }
-    .portfolio-github:hover { color: var(--red-bright); }
-
-    #monetization { background: var(--ink); }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 60px;
-    }
-    .pricing-card {
-      border: 1px solid rgba(139,42,42,0.2);
-      padding: 40px 32px;
-      background: var(--ink2);
-      position: relative;
-      transition: border-color 0.3s;
-    }
-    .pricing-card:hover { border-color: rgba(139,42,42,0.5); }
-    .pricing-card.featured {
-      border-color: var(--red);
-      background: linear-gradient(160deg, rgba(139,42,42,0.08) 0%, var(--ink2) 60%);
-    }
-    .pricing-card.featured::before {
-      content: 'Most Popular';
-      position: absolute;
-      top: -1px; left: 50%;
-      transform: translateX(-50%);
-      background: var(--red);
-      color: var(--white);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 4px 16px;
-      white-space: nowrap;
-    }
-    .pricing-tier {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      margin-bottom: 12px;
-    }
-    .pricing-price {
-      font-family: 'DM Serif Display', serif;
-      font-size: 48px;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .pricing-price span {
-      font-family: 'Syne', sans-serif;
-      font-size: 16px;
-      color: var(--fog);
-      font-weight: 400;
-    }
-    .pricing-desc {
-      font-size: 14px;
-      color: var(--fog);
-      margin: 16px 0 28px;
-      line-height: 1.6;
-    }
-    .pricing-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
-    .pricing-features li {
-      font-size: 13px;
-      color: var(--mist);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-    .pricing-features li::before {
-      content: '→';
-      color: var(--red-bright);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .pricing-cta {
-      display: block;
-      text-align: center;
-      padding: 12px 24px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.2s;
-    }
-    .pricing-cta-outline {
-      border: 1px solid rgba(139,42,42,0.4);
-      color: var(--red-bright);
-    }
-    .pricing-cta-outline:hover { background: rgba(139,42,42,0.08); border-color: var(--red); }
-    .pricing-cta-solid {
-      background: var(--red);
-      color: var(--white);
-    }
-    .pricing-cta-solid:hover { background: var(--red-bright); }
-
-    #lab { background: var(--ink2); }
-    .lab-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 60px;
-    }
-    .lab-card {
-      padding: 32px;
-      border: 1px solid rgba(139,42,42,0.15);
-      background: var(--ink);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s;
-    }
-    .lab-card:hover { border-color: rgba(139,42,42,0.4); }
-    .lab-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: var(--red);
-      opacity: 0.5;
-    }
-    .lab-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      margin-bottom: 16px;
-    }
-    .lab-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 22px;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-    .lab-body { font-size: 14px; color: var(--fog); line-height: 1.7; }
-
-    .research-note {
-      margin-top: 48px;
-      padding: 32px 40px;
-      border: 1px solid rgba(139,42,42,0.25);
-      background: rgba(139,42,42,0.05);
-      position: relative;
-    }
-    .research-note::before {
-      content: '"';
-      position: absolute;
-      top: 16px; left: 32px;
-      font-family: 'DM Serif Display', serif;
-      font-size: 72px;
-      color: rgba(139,42,42,0.2);
-      line-height: 1;
-    }
-    .research-note blockquote {
-      font-family: 'DM Serif Display', serif;
-      font-size: 22px;
-      font-style: italic;
-      color: var(--mist);
-      line-height: 1.5;
-      padding-left: 20px;
-    }
-    .research-note cite {
-      display: block;
-      margin-top: 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--red-bright);
-      padding-left: 20px;
-    }
-
-    #contact {
-      background: var(--ink);
-      text-align: center;
-    }
-    .contact-inner {
-      max-width: 640px;
+    .container {
+      max-width: 1200px;
       margin: 0 auto;
     }
-    .contact-actions {
+
+    .hero {
+      text-align: center;
+      padding: 80px 0;
+      border-bottom: 1px solid rgba(139, 42, 42, 0.3);
+      margin-bottom: 60px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--red-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: var(--fog);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
+
+    .template-card {
+      background: var(--ink2);
+      border: 1px solid rgba(139, 42, 42, 0.2);
+      padding: 32px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .template-card:hover {
+      border-color: var(--red-bright);
+      transform: translateY(-4px);
+    }
+
+    .template-card.featured {
+      background: linear-gradient(135deg, rgba(139, 42, 42, 0.1) 0%, var(--ink2) 100%);
+      border-color: var(--red);
+    }
+
+    .badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--red);
+      color: var(--white);
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .template-header h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+
+    .template-header p {
+      color: var(--fog);
+      margin-bottom: 16px;
+    }
+
+    .price {
+      font-family: 'Georgia', serif;
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--gold);
+      margin: 16px 0;
+    }
+
+    .price .period {
+      font-size: 16px;
+      color: var(--fog);
+    }
+
+    .features {
+      list-style: none;
+      margin: 24px 0;
+    }
+
+    .features li {
+      padding: 8px 0;
+      color: var(--mist);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .features li::before {
+      content: '✓';
+      color: var(--red-bright);
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-bright) 100%);
+      color: var(--white);
+      border: none;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(139, 42, 42, 0.4);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 16px 24px;
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 12px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(200, 168, 75, 0.1);
+      color: var(--gold2);
+    }
+
+    .payment-buttons {
       display: flex;
       gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 40px;
+      margin-top: 32px;
     }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-top: 48px;
-      flex-wrap: wrap;
+
+    .payment-buttons button {
+      flex: 1;
     }
-    .contact-link-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-    .contact-link-label {
+
+    .footer {
+      margin-top: 80px;
+      padding: 32px 0;
+      border-top: 1px solid rgba(139, 42, 42, 0.2);
+      text-align: center;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      font-size: 12px;
       color: var(--fog);
     }
-    .contact-link-value {
-      font-size: 14px;
+
+    .footer a {
+      color: var(--red-dim);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
       color: var(--red-bright);
-      transition: color 0.2s;
     }
-    .contact-link-value:hover { color: var(--gold); }
 
-    footer {
-      background: var(--ink2);
-      border-top: 1px solid rgba(139,42,42,0.2);
-      padding: 32px 48px;
-      display: flex;
+    /* Payment form modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 12, 15, 0.95);
+      z-index: 1000;
       align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
+      justify-content: center;
     }
-    .footer-brand {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+
+    .modal-content {
+      background: var(--ink2);
+      border: 1px solid var(--red);
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
       color: var(--fog);
     }
-    .footer-brand strong { color: var(--red-bright); }
-    .footer-right {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--fog);
-    }
-    .footer-right a { color: var(--red-dim); transition: color 0.2s; }
-    .footer-right a:hover { color: var(--red-bright); }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+    #payment-element {
+      margin: 24px 0;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    @media (max-width: 900px) {
-      nav { padding: 0 24px; }
-      .nav-links { display: none; }
-      section { padding: 72px 24px; }
-      #hero { padding: 100px 24px 60px; }
-      .about-grid { grid-template-columns: 1fr; gap: 48px; }
-      .products-grid { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; }
-      .lab-grid { grid-template-columns: 1fr; }
-      .portfolio-item { grid-template-columns: 1fr; gap: 8px; }
-      .hero-stats { flex-direction: column; gap: 16px; }
-      .hero-stat { border-left: none; padding-left: 0; }
-      .nvidia-strip { padding: 16px 24px; }
-      footer { flex-direction: column; text-align: center; }
+    .error-message {
+      color: var(--red);
+      margin: 16px 0;
+      display: none;
+    }
+
+    .success-message {
+      color: var(--green);
+      margin: 16px 0;
+      display: none;
     }
   </style>
 </head>
 <body>
-
-  <nav>
-    <div class="nav-logo">
-      <div class="nav-logo-mark">B</div>
-      Baker Street Project
+  <div class="container">
+    <div class="hero">
+      <h1>Claude Code Enterprise Templates</h1>
+      <p>Transform your Claude Code into an enterprise-grade AI development platform</p>
     </div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#technology">Technology</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#monetization">Plans</a></li>
-      <li><a href="#lab">Research</a></li>
-    </ul>
-    <a class="nav-cta" href="mailto:bakerstreetbandit@zohomail.com">Contact Us</a>
-  </nav>
 
-  <section id="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-glow2"></div>
-    <div class="hero-content">
-      <div class="hero-badge">Baker Street Project · Hasselt, Belgium · Est. 2024</div>
-      <h1 class="hero-title display">
-        Privacy-First<br /><em>AI Infrastructure</em><br />for Serious Builders
-      </h1>
-      <p class="hero-sub">
-        The AutomationCodex ecosystem. Enterprise AI developer tooling, multi-agent research automation, and quantum-inspired optimization — all powered by NVIDIA NIM. Your data never leaves your control.
-      </p>
-      <div class="hero-actions">
-        <a href="#portfolio" class="btn-primary">Explore Projects →</a>
-        <a href="mailto:bakerstreetbandit@zohomail.com" class="btn-ghost">Get in Touch</a>
+    <div class="templates-grid">
+      <div class="template-card featured">
+        <div class="badge">Most Popular</div>
+        <div class="template-header">
+          <h3>🛡️ Enterprise Security Suite</h3>
+          <p>MCP tool hardening with enterprise-grade security features</p>
+          <div class="price">$299<span class="period">/one-time</span></div>
+          <ul class="features">
+            <li>Input validation middleware</li>
+            <li>API key protection system</li>
+            <li>CSP headers implementation</li>
+            <li>Rate limiting & audit logging</li>
+            <li>Security audit automation</li>
+          </ul>
+        </div>
+        <button id="buy-security" class="btn-primary">Buy Security Suite →</button>
       </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-value display">90+</div>
-          <div class="hero-stat-label">Repositories</div>
+
+      <div class="template-card">
+        <div class="template-header">
+          <h3>💳 Stripe Payment Integration</h3>
+          <p>Complete payment processing for selling templates</p>
+          <div class="price">$149<span class="period">/one-time</span></div>
+          <ul class="features">
+            <li>Checkout session creation</li>
+            <li>Webhook handler implementation</li>
+            <li>Package delivery system</li>
+            <li>Email notifications</li>
+            <li>Customer portal integration</li>
+          </ul>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value display">3</div>
-          <div class="hero-stat-label">Product Lines</div>
+        <button id="buy-stripe" class="btn-primary">Buy Stripe Integration →</button>
+      </div>
+
+      <div class="template-card">
+        <div class="template-header">
+          <h3>🤖 Perplexity AI Integration</h3>
+          <p>Chat history recovery and research automation</p>
+          <div class="price">$179<span class="period">/one-time</span></div>
+          <ul class="features">
+            <li>Chat history persistence</li>
+            <li>Research query automation</li>
+            <li>Data aggregation engine</li>
+            <li>Report generation system</li>
+            <li>Browser automation scripts</li>
+          </ul>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value display">NVIDIA</div>
-          <div class="hero-stat-label">NIM Certified</div>
+        <button id="buy-perplexity" class="btn-primary">Buy Perplexity Integration →</button>
+      </div>
+
+      <div class="template-card">
+        <div class="template-header">
+          <h3>🎨 GitHub Profile Professionalization</h3>
+          <p>Automated profile transformation for enterprise</p>
+          <div class="price">$99<span class="period">/one-time</span></div>
+          <ul class="features">
+            <li>Profile README generation</li>
+            <li>Organization branding</li>
+            <li>Sponsor tiers setup</li>
+            <li>Security hardening scripts</li>
+            <li>Batch repo operations</li>
+          </ul>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value display">ORCID</div>
-          <div class="hero-stat-label">Researcher</div>
+        <button id="buy-profile" class="btn-primary">Buy Profile Kit →</button>
+      </div>
+
+      <div class="template-card">
+        <div class="template-header">
+          <h3>👁️ Watermarking & Attribution System</h3>
+          <p>Digital watermarking for generated content</p>
+          <div class="price">$199<span class="period">/one-time</span></div>
+          <ul class="features">
+            <li>Invisible watermarking engine</li>
+            <li>Content tracking system</li>
+            <li>Metadata injection</li>
+            <li>Batch processing tools</li>
+            <li>License enforcement</li>
+          </ul>
         </div>
+        <button id="buy-watermark" class="btn-primary">Buy Watermarking System →</button>
+      </div>
+
+      <div class="template-card">
+        <div class="template-header">
+          <h3>📚 Complete Template Package</h3>
+          <p>All enterprise templates + future updates</p>
+          <div class="price">$999<span class="period">/lifetime</span></div>
+          <ul class="features">
+            <li>✅ All 10 template categories</li>
+            <li>✅ Lifetime updates & support</li>
+            <li>✅ Priority email support</li>
+            <li>✅ Early access to new features</li>
+            <li>✅ Custom template requests</li>
+          </ul>
+        </div>
+        <button id="buy-complete" class="btn-primary">Buy Complete Package →</button>
       </div>
     </div>
-  </section>
 
-  <div class="nvidia-strip">
-    <span class="nvidia-strip-label">Credentials</span>
-    <div class="nvidia-badges">
-      <span class="nvidia-badge">NVIDIA Developer Program Member</span>
-      <span class="nvidia-badge">NVIDIA NIM API Approved</span>
-      <span class="nvidia-badge">NVIDIA Inception Eligible</span>
-      <span class="nvidia-badge">NVIDIA Deep Learning Institute</span>
-      <span class="nvidia-badge">GitHub Developer Program</span>
+    <div class="payment-buttons">
+      <button class="btn-secondary" onclick="sponsorGitHub()">❤️ Sponsor on GitHub</button>
+      <button class="btn-secondary" onclick="contactEnterprise()">🏢 Enterprise Inquiry</button>
     </div>
   </div>
 
-  <section id="about">
-    <div class="about-grid reveal">
-      <div class="about-left">
-        <div class="section-label">About</div>
-        <h2 class="section-title display">Built on the<br /><em>Baker Street</em><br />Principle</h2>
-        <p class="section-body">
-          Like Sherlock Holmes at 221B, Baker Street Project approaches every hard problem with systematic reasoning, unconventional methods, and the conviction that no challenge is truly unsolvable. We build AI infrastructure that doesn't compromise on privacy, performance, or ambition.
-        </p>
-        <p class="section-body" style="margin-top:16px;">
-          Automation-first. Privacy-native. Enterprise-grade. NVIDIA-powered. We are building the tooling layer that lets serious organizations deploy frontier AI on their own terms.
-        </p>
+  <div class="footer">
+    <p>© 2024 Baker Street Project | <a href="mailto:bakerstreetbandit@zohomail.com">Contact</a> | <a href="https://github.com/BoozeLee" target="_blank">GitHub</a></p>
+  </div>
+
+  <!-- Stripe Checkout Modal -->
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Complete Your Purchase</h2>
+      <div id="payment-element"></div>
+      <div id="error-message" class="error-message"></div>
+      <div id="success-message" class="success-message">
+        Success! Check your email for the template.
       </div>
-      <div class="about-right">
-        <div class="founder-card">
-          <div class="founder-name display">Kiliaan Vanvoorden</div>
-          <div class="founder-alias mono">— aka BoozeLee</div>
-          <p class="founder-bio">
-            AI Training Specialist, AutomationCodex creator, and founder of Baker Street Project. Self-taught developer who in two years built a 90+ repository portfolio spanning enterprise AI tooling, multi-agent research systems, quantum-inspired optimization, and privacy-first cloud infrastructure. ORCID-registered researcher applying AI to disease, climate, and scientific discovery.
-          </p>
-          <div class="founder-tags">
-            <span class="tag">Python</span>
-            <span class="tag">Go</span>
-            <span class="tag">TypeScript</span>
-            <span class="tag">NVIDIA NIM</span>
-            <span class="tag">Ollama</span>
-            <span class="tag">Linux</span>
-            <span class="tag">Android AI</span>
-            <span class="tag">Multi-Agent</span>
-          </div>
-        </div>
-      </div>
+      <button id="submit-payment" class="btn-primary">Pay Now</button>
     </div>
-  </section>
-
-  <section id="technology">
-    <div class="section-label reveal">Technology</div>
-    <h2 class="section-title display reveal">The <em>AutomationCodex</em><br />Ecosystem</h2>
-    <p class="section-body reveal">Three interlocking product lines. One unified infrastructure. Zero data egress.</p>
-    <div class="products-grid reveal">
-
-      <div class="product-card featured">
-        <div class="product-icon">⚡</div>
-        <div class="product-name">AutomationCodex + NVIDIA NIM</div>
-        <div class="product-tech mono">NVIDIA NIM · Cloud Infrastructure</div>
-        <p class="product-desc">The most developed Baker Street asset. An approved NVIDIA NIM cloud backend powering optimized AI model inference, containerized deployment, and performance analysis. The engine behind everything we build.</p>
-        <a href="https://github.com/BoozeLee" class="product-link" target="_blank">GitHub →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">🤖</div>
-        <div class="product-name">go-ai-coder</div>
-        <div class="product-tech mono">Go · Ollama · GitHub API</div>
-        <p class="product-desc">Enterprise-grade AI coding assistant with local AI processing. GitHub integration, web scraping, CI/CD automation. Unlike Copilot — your code never leaves your machine.</p>
-        <a href="https://github.com/Bakery-street-project/go-ai-coder" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">🔬</div>
-        <div class="product-name">Polymorphic Research Framework</div>
-        <div class="product-tech mono">Python · Multi-Agent · Enterprise Security</div>
-        <p class="product-desc">Fully private, auto-adaptive multi-agent research environment. Decomposes complex scientific, regulatory, and commercial problems into coordinated autonomous agent workflows.</p>
-        <a href="https://github.com/Bakery-street-project/Polymorphic-Research-Framework" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">⚛️</div>
-        <div class="product-name">QaaS Platform</div>
-        <div class="product-tech mono">Python · Quantum-Inspired · White-Label</div>
-        <p class="product-desc">Quantum-Inspired Optimization as a Service. Mathematical optimization for logistics, financial modeling, and scientific computation. Enterprise pricing: $2,999/month.</p>
-        <a href="https://github.com/BoozeLee/qaas-platform" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">🔒</div>
-        <div class="product-name">CloudyMcCodeFace</div>
-        <div class="product-tech mono">Privacy-First UI · Zero Data Egress</div>
-        <p class="product-desc">Privacy-first AI coding assistant with enterprise-grade UI. The user-facing layer of AutomationCodex — powerful AI development tooling with no cloud dependency.</p>
-        <a href="https://github.com/Bakery-street-project/CloudyMcCodeFace" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">🛡️</div>
-        <div class="product-name">ubuntu-live-security</div>
-        <div class="product-tech mono">Shell · Linux · Security Hardening</div>
-        <p class="product-desc">Linux security hardening toolkit for Ubuntu. Hardens development environments for sensitive AI workloads and private research operations. Privacy by default.</p>
-        <a href="https://github.com/BoozeLee/ubuntu-live-security" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="portfolio">
-    <div class="section-label reveal">Portfolio</div>
-    <h2 class="section-title display reveal">All <em>Projects</em></h2>
-    <p class="section-body reveal">Public-facing repositories. The majority of active development occurs in private.</p>
-    <div class="portfolio-list reveal">
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">NVIDIA NIM Cloud Service</div>
-          <span class="portfolio-tech-pill mono">NVIDIA NIM · Cloud</span>
-        </div>
-        <div class="portfolio-desc">Approved NVIDIA cloud infrastructure for optimized AI model inference. Production-grade backend powering the entire ecosystem.</div>
-        <span class="portfolio-status status-active">Active</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">AutomationCodex</div>
-          <span class="portfolio-tech-pill mono">Python · TypeScript</span>
-        </div>
-        <div class="portfolio-desc">Proprietary automation framework. Self-evolving template system at the core of Baker Street Project. Powers go-ai-coder, Amphetamemes, and more.</div>
-        <span class="portfolio-status status-active">Active</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">go-ai-coder</div>
-          <span class="portfolio-tech-pill mono">Go</span>
-        </div>
-        <div class="portfolio-desc">Enterprise-grade AI coding assistant. Local AI processing, GitHub integration, web scraping. Open-source template, enterprise ready.</div>
-        <span class="portfolio-status status-active">Active</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">Polymorphic Research Framework</div>
-          <span class="portfolio-tech-pill mono">Python · Multi-Agent</span>
-        </div>
-        <div class="portfolio-desc">Fully private, auto-adaptive multi-agent research environment with enterprise security. Autonomous problem decomposition.</div>
-        <span class="portfolio-status status-dev">In Development</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">QaaS Platform</div>
-          <span class="portfolio-tech-pill mono">Python</span>
-        </div>
-        <div class="portfolio-desc">Quantum-Inspired Optimization as a Service. White-label mathematical optimization at $2,999/month enterprise tier.</div>
-        <span class="portfolio-status status-dev">In Development</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">CloudyMcCodeFace</div>
-          <span class="portfolio-tech-pill mono">Privacy-First</span>
-        </div>
-        <div class="portfolio-desc">Privacy-first AI coding assistant with zero data egress. Enterprise UI for AutomationCodex.</div>
-        <span class="portfolio-status status-dev">In Development</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">ubuntu-live-security</div>
-          <span class="portfolio-tech-pill mono">Shell / Bash</span>
-        </div>
-        <div class="portfolio-desc">Linux security hardening toolkit. Privacy-focused system hardening for AI development environments.</div>
-        <span class="portfolio-status status-active">Active</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">Amphetamemes</div>
-          <span class="portfolio-tech-pill mono">Python</span>
-        </div>
-        <div class="portfolio-desc">AI-powered psychedelic art template marketplace. Self-evolving creative automation with AutomationCodex integration.</div>
-        <span class="portfolio-status status-dev">Beta</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">Sherlockian Research Squad</div>
-          <span class="portfolio-tech-pill mono">Multi-Agent AI</span>
-        </div>
-        <div class="portfolio-desc">Multi-agent investigative research framework. Systematic mystery decomposition with structured autonomous documentation.</div>
-        <span class="portfolio-status status-concept">Concept</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">AI Coding Agents</div>
-          <span class="portfolio-tech-pill mono">Go</span>
-        </div>
-        <div class="portfolio-desc">Complete AI coding agent ecosystem. Educational workshop and production-ready framework with GitHub integration.</div>
-        <span class="portfolio-status status-concept">Reference</span>
-      </div>
-    </div>
-    <a href="https://github.com/BoozeLee" class="portfolio-github" target="_blank">
-      Explore all 90+ repositories at <span>github.com/BoozeLee</span> and <span>github.com/Bakery-street-project</span> →
-    </a>
-  </section>
-
-  <section id="monetization">
-    <div class="section-label reveal">Plans</div>
-    <h2 class="section-title display reveal">Support the <em>Mission</em></h2>
-    <p class="section-body reveal">From open-source community to enterprise partnership. Choose your tier.</p>
-    <div class="pricing-grid reveal">
-
-      <div class="pricing-card">
-        <div class="pricing-tier mono">Developer</div>
-        <div class="pricing-price display">Free</div>
-        <p class="pricing-desc">Open-source access to go-ai-coder and core AutomationCodex. Community support via Discord and Matrix.</p>
-        <ul class="pricing-features">
-          <li>go-ai-coder open-source access</li>
-          <li>Core AutomationCodex templates</li>
-          <li>Community Discord + Matrix</li>
-          <li>GitHub issue tracker</li>
-        </ul>
-        <a href="https://github.com/Bakery-street-project" class="pricing-cta pricing-cta-outline" target="_blank">View on GitHub</a>
-      </div>
-
-      <div class="pricing-card featured">
-        <div class="pricing-tier mono">Professional</div>
-        <div class="pricing-price display">$299 <span>/ month</span></div>
-        <p class="pricing-desc">Full AutomationCodex suite with NVIDIA NIM inference credits and GitHub CI/CD integration.</p>
-        <ul class="pricing-features">
-          <li>Full AutomationCodex suite</li>
-          <li>NVIDIA NIM inference credits</li>
-          <li>GitHub CI/CD integration</li>
-          <li>Priority technical support</li>
-          <li>Beta access to new tools</li>
-        </ul>
-        <a href="https://github.com/sponsors/BoozeLee" class="pricing-cta pricing-cta-solid" target="_blank">Sponsor on GitHub</a>
-      </div>
-
-      <div class="pricing-card">
-        <div class="pricing-tier mono">Enterprise</div>
-        <div class="pricing-price display">$2,999 <span>/ month</span></div>
-        <p class="pricing-desc">QaaS optimization, Polymorphic Research Engine, SLA, white-label, dedicated NIM endpoints.</p>
-        <ul class="pricing-features">
-          <li>QaaS quantum-inspired optimization</li>
-          <li>Polymorphic Research Engine access</li>
-          <li>Dedicated NVIDIA NIM endpoints</li>
-          <li>White-label licensing available</li>
-          <li>Custom agent development</li>
-          <li>On-premise deployment option</li>
-        </ul>
-        <a href="mailto:bakerstreetbandit@zohomail.com" class="pricing-cta pricing-cta-outline">Contact Sales</a>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="lab">
-    <div class="section-label reveal">Research Lab</div>
-    <h2 class="section-title display reveal">Beyond the <em>Frontier</em></h2>
-    <p class="section-body reveal">Baker Street Project applies AI to the hardest unsolved problems — not just the profitable ones.</p>
-    <div class="lab-grid reveal">
-      <div class="lab-card">
-        <div class="lab-tag mono">Research Track 1</div>
-        <div class="lab-title display">Disease & Medicine</div>
-        <p class="lab-body">Applying multi-agent AI systems to disease modeling, drug discovery pattern recognition, and clinical data synthesis — targeting breakthroughs that traditional pharmaceutical R&D timelines cannot achieve.</p>
-      </div>
-      <div class="lab-card">
-        <div class="lab-tag mono">Research Track 2</div>
-        <div class="lab-title display">Climate Intelligence</div>
-        <p class="lab-body">Using quantum-inspired optimization and multi-agent simulation to model climate systems, identify intervention leverage points, and accelerate evidence-based climate response at scale.</p>
-      </div>
-      <div class="lab-card">
-        <div class="lab-tag mono">Infrastructure</div>
-        <div class="lab-title display">AWS Bedrock Orchestration</div>
-        <p class="lab-body">Optimized multi-model orchestration for enterprise AI workloads using Anthropic and Meta models via AWS Bedrock. Production-ready patterns for complex agent coordination.</p>
-      </div>
-      <div class="lab-card">
-        <div class="lab-tag mono">Infrastructure</div>
-        <div class="lab-title display">Location Intelligence</div>
-        <p class="lab-body">Advanced geospatial risk analysis integrated with real-time financial data streams. Context-aware AI that understands the physical world, not just digital signals.</p>
-      </div>
-    </div>
-    <div class="research-note reveal">
-      <blockquote>"Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world."</blockquote>
-      <cite>— The operating philosophy of Baker Street Project</cite>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="contact-inner reveal">
-      <div class="section-label" style="justify-content:center;">Contact</div>
-      <h2 class="section-title display">Let's Build<br /><em>Something Real</em></h2>
-      <p class="section-body" style="margin:16px auto 0;">
-        Investor? Partner? Enterprise client? We are raising a Seed round and actively seeking collaborators who understand that the next era of AI will be won by the most trusted infrastructure — not the largest cloud.
-      </p>
-      <div class="contact-actions">
-        <a href="mailto:bakerstreetbandit@zohomail.com" class="btn-primary">Send a Message →</a>
-        <a href="https://github.com/sponsors/BoozeLee" class="btn-ghost" target="_blank">Sponsor on GitHub</a>
-      </div>
-      <div class="contact-links">
-        <div class="contact-link-item">
-          <span class="contact-link-label mono">Email</span>
-          <a href="mailto:bakerstreetbandit@zohomail.com" class="contact-link-value">bakerstreetbandit@zohomail.com</a>
-        </div>
-        <div class="contact-link-item">
-          <span class="contact-link-label mono">GitHub</span>
-          <a href="https://github.com/BoozeLee" class="contact-link-value" target="_blank">github.com/BoozeLee</a>
-        </div>
-        <div class="contact-link-item">
-          <span class="contact-link-label mono">Research</span>
-          <a href="https://orcid.org/0009-0007-3851-6327" class="contact-link-value" target="_blank">ORCID 0009-0007-3851-6327</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-brand">
-      <strong>Baker Street Project</strong> · Hasselt, Belgium · © 2026 · Pioneering Autonomous AI Infrastructure
-    </div>
-    <div class="footer-right">
-      <a href="https://github.com/Bakery-street-project" target="_blank">GitHub Org</a>
-      &nbsp;·&nbsp;
-      <a href="https://orcid.org/0009-0007-3851-6327" target="_blank">ORCID Research</a>
-      &nbsp;·&nbsp;
-      <a href="mailto:bakerstreetbandit@zohomail.com">bakerstreetbandit@zohomail.com</a>
-    </div>
-  </footer>
+  </div>
 
   <script>
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
+    // Stripe initialization
+    const stripe = Stripe('pk_live_YOUR_PUBLISHABLE_KEY');
+    let elements;
 
-    document.querySelectorAll('.products-grid, .pricing-grid, .lab-grid, .portfolio-list').forEach(grid => {
-      const children = grid.children;
-      Array.from(children).forEach((child, i) => {
-        child.style.transitionDelay = `${i * 0.07}s`;
-        if (!child.classList.contains('reveal')) {
-          child.style.opacity = '0';
-          child.style.transform = 'translateY(16px)';
-          child.style.transition = `opacity 0.6s ease ${i * 0.07}s, transform 0.6s ease ${i * 0.07}s`;
-        }
+    // Product configurations
+    const products = {
+      'buy-security': 'price_enterprise_security',
+      'buy-stripe': 'price_stripe_integration',
+      'buy-perplexity': 'price_perplexity_integration',
+      'buy-profile': 'price_profile_kit',
+      'buy-watermark': 'price_watermark_system',
+      'buy-complete': 'price_complete_package'
+    };
+
+    // Event listeners for purchase buttons
+    Object.keys(products).forEach(buttonId => {
+      document.getElementById(buttonId).addEventListener('click', () => {
+        const productId = products[buttonId];
+        initializeCheckout(productId);
       });
     });
 
-    const parentObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          Array.from(entry.target.children).forEach(child => {
-            child.style.opacity = '1';
-            child.style.transform = 'translateY(0)';
+    async function initializeCheckout(productId) {
+      // Hide messages
+      document.getElementById('error-message').style.display = 'none';
+      document.getElementById('success-message').style.display = 'none';
+
+      // Create checkout session
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId })
+      });
+
+      const { sessionId } = await response.json();
+
+      // Show modal with Stripe
+      document.getElementById('checkout-modal').style.display = 'flex';
+
+      // Initialize Stripe Elements
+      elements = stripe.elements({ clientSecret: 'client_secret' });
+      const paymentElement = elements.create('payment');
+      paymentElement.mount('#payment-element');
+    }
+
+    // Payment submission
+    document.getElementById('submit-payment').addEventListener('click', async () => {
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/success?product_id=template`
+        }
+      });
+
+      if (error) {
+        document.getElementById('error-message').textContent = error.message;
+        document.getElementById('error-message').style.display = 'block';
+      }
+    });
+
+    // Modal close
+    document.querySelector('.close').addEventListener('click', () => {
+      document.getElementById('checkout-modal').style.display = 'none';
+      elements = null;
+    });
+
+    // GitHub Sponsors
+    function sponsorGitHub() {
+      window.open('https://github.com/sponsors/BoozeLee', '_blank');
+    }
+
+    // Enterprise contact
+    function contactEnterprise() {
+      window.location.href = 'mailto:bakerstreetbandit@zohomail.com?subject=Enterprise Inquiry';
+    }
+
+    // Analytics tracking
+    if (typeof gtag !== 'undefined') {
+      // Track button clicks
+      Object.keys(products).forEach(buttonId => {
+        document.getElementById(buttonId).addEventListener('click', () => {
+          gtag('event', 'purchase_click', {
+            event_category: 'Commerce',
+            event_label: buttonId,
+            value: 1
           });
-          parentObserver.unobserve(entry.target);
-        }
+        });
       });
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.products-grid, .pricing-grid, .lab-grid, .portfolio-list').forEach(g => parentObserver.observe(g));
-
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - 100) current = sec.getAttribute('id');
-      });
-      navLinks.forEach(link => {
-        link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--red-bright)' : '';
-      });
-    });
+    }
   </script>
 </body>
 </html>
