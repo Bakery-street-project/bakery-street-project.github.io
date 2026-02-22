@@ -1,482 +1,570 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Code Enterprise Templates - Baker Street Project</title>
-  <script src="https://js.stripe.com/v3/"></script>
+  <meta charset="UTF-8" />
+  <title>Bakerstreet Project – NVIDIA-Powered Agricultural Robotics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Bakerstreet Project builds NVIDIA Jetson, Isaac Sim, and Isaac ROS powered agricultural robots for greenhouse farming in Belgium." />
+
   <style>
     :root {
-      --ink: #0A0C0F;
-      --ink2: #111418;
-      --ink3: #1A1F26;
-      --gold: #C8A84B;
-      --gold2: #E8C86A;
-      --gold-dim: #7a6529;
-      --red: #8B2A2A;
-      --red-bright: #C84A4A;
-      --red-dim: #5A1A1A;
-      --fog: #8A9099;
-      --mist: #C2C8D0;
-      --white: #F0EDE6;
+      --bg: #020617;
+      --bg-elevated: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --nvidia: #76b900;
+      --danger: #ef4444;
+      --radius: 14px;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--ink);
-      color: var(--white);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%);
+      color: var(--text);
       line-height: 1.6;
-      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: #f3f4f6;
+      color: #111827;
+    }
+    body.light .section,
+    body.light .hero-card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+    }
+    body.light .badge,
+    body.light .chip,
+    body.light .pill,
+    body.light .tag {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+      color: #111827;
+    }
+    body.light .hero-lead,
+    body.light .section-sub,
+    body.light .person-body,
+    body.light .demo-meta,
+    body.light ul.clean {
+      color: #4b5563;
+    }
+    body.light footer {
+      border-top-color: #e5e7eb;
+      color: #6b7280;
+    }
+    body.light .person {
+      background: #fff;
+      border-color: #e5e7eb;
+    }
+    body.light .demo-card {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
     }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .badge {
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      padding: 4px 10px;
+      background: rgba(15,23,42,0.8);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .badge-nvidia { border-color: var(--nvidia); color: var(--nvidia); }
+
+    /* theme toggle */
+    #theme-toggle {
+      margin-left: auto;
+      background: rgba(15,23,42,0.8);
+      border: 1px solid #374151;
+      border-radius: 999px;
+      padding: 5px 14px;
+      color: var(--text);
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color 0.2s;
+    }
+    #theme-toggle:hover { border-color: var(--nvidia); }
+    body.light #theme-toggle { background: #fff; color: #111827; border-color: #d1d5db; }
 
     .hero {
-      text-align: center;
-      padding: 80px 0;
-      border-bottom: 1px solid rgba(139, 42, 42, 0.3);
-      margin-bottom: 60px;
-    }
-
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--red-bright) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero p {
-      font-size: 20px;
-      color: var(--fog);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .templates-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 24px;
-      margin: 40px 0;
-    }
-
-    .template-card {
-      background: var(--ink2);
-      border: 1px solid rgba(139, 42, 42, 0.2);
-      padding: 32px;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .template-card:hover {
-      border-color: var(--red-bright);
-      transform: translateY(-4px);
-    }
-
-    .template-card.featured {
-      background: linear-gradient(135deg, rgba(139, 42, 42, 0.1) 0%, var(--ink2) 100%);
-      border-color: var(--red);
-    }
-
-    .badge {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: var(--red);
-      color: var(--white);
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .template-header h3 {
-      font-size: 24px;
-      margin-bottom: 8px;
-      color: var(--white);
-    }
-
-    .template-header p {
-      color: var(--fog);
-      margin-bottom: 16px;
-    }
-
-    .price {
-      font-family: 'Georgia', serif;
-      font-size: 32px;
-      font-weight: bold;
-      color: var(--gold);
-      margin: 16px 0;
-    }
-
-    .price .period {
-      font-size: 16px;
-      color: var(--fog);
-    }
-
-    .features {
-      list-style: none;
-      margin: 24px 0;
-    }
-
-    .features li {
-      padding: 8px 0;
-      color: var(--mist);
-      display: flex;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 32px;
       align-items: center;
-      gap: 12px;
     }
+    @media (max-width: 880px) { .hero { grid-template-columns: minmax(0, 1fr); } }
 
-    .features li::before {
-      content: '✓';
-      color: var(--red-bright);
-      font-weight: bold;
+    h1 {
+      font-size: clamp(2.4rem, 4vw, 3.1rem);
+      font-weight: 750;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 10px;
     }
-
-    .btn-primary {
-      width: 100%;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, var(--red) 0%, var(--red-bright) 100%);
-      color: var(--white);
-      border: none;
-      font-size: 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: all 0.2s;
+    .hero-lead {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 34rem;
+      margin-bottom: 18px;
     }
+    .hero-highlight { color: var(--nvidia); font-weight: 600; }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(139, 42, 42, 0.4);
-    }
-
-    .btn-secondary {
-      width: 100%;
-      padding: 16px 24px;
-      background: transparent;
-      color: var(--gold);
-      border: 1px solid var(--gold);
-      font-size: 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 12px;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(200, 168, 75, 0.1);
-      color: var(--gold2);
-    }
-
-    .payment-buttons {
+    .hero-cta-row {
       display: flex;
-      gap: 16px;
-      margin-top: 32px;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
     }
-
-    .payment-buttons button {
-      flex: 1;
-    }
-
-    .footer {
-      margin-top: 80px;
-      padding: 32px 0;
-      border-top: 1px solid rgba(139, 42, 42, 0.2);
-      text-align: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--fog);
-    }
-
-    .footer a {
-      color: var(--red-dim);
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      color: var(--red-bright);
-    }
-
-    /* Payment form modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(10, 12, 15, 0.95);
-      z-index: 1000;
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .modal-content {
-      background: var(--ink2);
-      border: 1px solid var(--red);
-      padding: 40px;
-      max-width: 500px;
-      width: 90%;
-      position: relative;
-    }
-
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 24px;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.9rem;
+      font-weight: 500;
       cursor: pointer;
-      color: var(--fog);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--nvidia), #a3e635);
+      color: #020617;
+      border-color: #4d7c0f;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+    .btn-primary:hover { text-decoration: none; filter: brightness(1.1); }
+    .btn-outline { border-color: #374151; background: rgba(15,23,42,0.8); }
+    .btn-outline:hover { text-decoration: none; border-color: var(--nvidia); }
+    .btn span.icon { font-size: 1rem; }
+
+    .hero-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .metric { min-width: 140px; }
+    .metric-label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; color: #6b7280; }
+    .metric-value { font-size: 1rem; font-weight: 600; color: var(--accent); }
+
+    .hero-card {
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), transparent 60%),
+                  linear-gradient(145deg, #020617, #020617 40%, #0b1120);
+      border: 1px solid #1f2937;
+      padding: 18px 18px 16px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.7);
+    }
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .chip {
+      border-radius: 999px;
+      padding: 3px 10px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid #1f2937;
+      font-size: 0.72rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip-nvidia { border-color: var(--nvidia); color: var(--nvidia); }
+    .hero-card-body { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; font-size: 0.7rem; }
+    .pill {
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid #1f2937;
+      color: #e5e7eb;
+    }
+    .pill-tag { border-color: rgba(148,163,184,0.5); color: #9ca3af; }
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
     }
 
-    #payment-element {
-      margin: 24px 0;
+    .section {
+      margin-top: 48px;
+      padding: 24px 20px;
+      border-radius: var(--radius);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid #1f2937;
+    }
+    .section h2 { font-size: 1.3rem; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .section-sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 18px; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+      gap: 24px;
+    }
+    @media (max-width: 880px) { .grid-2 { grid-template-columns: minmax(0,1fr); } }
+
+    ul.clean { list-style: none; padding-left: 0; font-size: 0.9rem; color: var(--text-muted); }
+    ul.clean li { margin-bottom: 10px; padding-left: 18px; position: relative; }
+    ul.clean li::before { content: "•"; position: absolute; left: 0; color: var(--accent); font-size: 1rem; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; font-size: 0.75rem; }
+    .tag {
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
     }
 
-    .error-message {
-      color: var(--red);
-      margin: 16px 0;
-      display: none;
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 20px;
+      font-size: 0.9rem;
     }
+    .person {
+      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid #1f2937;
+      padding: 16px 16px 14px;
+    }
+    .person-role { font-size: 0.8rem; color: var(--nvidia); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .person-name { font-weight: 600; margin-bottom: 6px; font-size: 1rem; }
+    .person-body { color: var(--text-muted); font-size: 0.85rem; }
 
-    .success-message {
-      color: var(--green);
-      margin: 16px 0;
-      display: none;
+    .demo-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+      gap: 22px;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 880px) { .demo-grid { grid-template-columns: minmax(0,1fr); } }
+    .demo-card {
+      border-radius: 16px;
+      background: radial-gradient(circle at top left, rgba(118,185,0,0.15), transparent 60%), #020617;
+      border: 1px solid #1f2937;
+      padding: 16px 16px 14px;
+    }
+    .demo-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .demo-title { font-weight: 600; margin-bottom: 6px; }
+    .demo-meta { margin-top: 12px; font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Contact form */
+    .contact-form { margin-top: 10px; }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #374151;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--nvidia); }
+    body.light .contact-form input,
+    body.light .contact-form textarea { background: #fff; color: #111827; border-color: #d1d5db; }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #1f2937;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="hero">
-      <h1>Claude Code Enterprise Templates</h1>
-      <p>Transform your Claude Code into an enterprise-grade AI development platform</p>
-    </div>
+  <div class="page">
+    <header>
+      <div class="badge-row">
+        <span class="badge badge-nvidia">
+          <span class="badge-dot"></span>
+          NVIDIA Jetson • Isaac Sim • Isaac ROS
+        </span>
+        <span class="badge">
+          🌱 Greenhouse Robotics • Hasselt, Belgium
+        </span>
+        <button id="theme-toggle" type="button">
+          <span id="theme-icon">🌙</span> <span id="theme-label">Light mode</span>
+        </button>
+      </div>
 
-    <div class="templates-grid">
-      <div class="template-card featured">
-        <div class="badge">Most Popular</div>
-        <div class="template-header">
-          <h3>🛡️ Enterprise Security Suite</h3>
-          <p>MCP tool hardening with enterprise-grade security features</p>
-          <div class="price">$299<span class="period">/one-time</span></div>
-          <ul class="features">
-            <li>Input validation middleware</li>
-            <li>API key protection system</li>
-            <li>CSP headers implementation</li>
-            <li>Rate limiting & audit logging</li>
-            <li>Security audit automation</li>
+      <div class="hero">
+        <div>
+          <h1>NVIDIA‑Powered Agricultural Robotics for Greenhouses</h1>
+          <p class="hero-lead">
+            <span class="hero-highlight">Bakerstreet Project</span> builds AI‑driven robots for
+            European greenhouses, combining NVIDIA Jetson Orin, Isaac Sim, and Isaac ROS to turn
+            labor‑intensive farming into precise, autonomous operations.
+          </p>
+          <p class="hero-lead">
+            After relocating to the countryside and gaining access to three large glasshouses,
+            we focus fully on one mission: <strong>deploy real NVIDIA‑based robots in real farms</strong>,
+            starting in Belgium and scaling across Europe.
+          </p>
+          <div class="hero-cta-row">
+            <a href="#demo" class="btn btn-primary">
+              <span class="icon">▶</span> Watch Greenhouse Demo (soon)
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <span class="icon">✉</span> Talk about pilots or funding
+            </a>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric">
+              <div class="metric-label">Test Sites</div>
+              <div class="metric-value">3× glasshouses</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Edge AI</div>
+              <div class="metric-value">Jetson Orin</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Simulation</div>
+              <div class="metric-value">Isaac Sim</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div class="hero-card-header">
+            <span class="chip chip-nvidia">NVIDIA Greenhouse Stack</span>
+            <span class="chip">Prototype Phase • 2026</span>
+          </div>
+          <div class="hero-card-body">
+            <strong>Pipeline:</strong> Isaac Sim → Isaac ROS → Jetson Orin → Glasshouse robot.
+            We simulate crops and lighting, train with synthetic data, then deploy the same
+            perception and navigation stack into real greenhouses in Hasselt.
+          </div>
+          <div class="hero-pills">
+            <span class="pill">Jetson AGX Orin – 275 TOPS Edge AI</span>
+            <span class="pill">Isaac Sim synthetic greenhouse environments</span>
+            <span class="pill">Isaac ROS Visual SLAM &amp; Nvblox</span>
+            <span class="pill pill-tag">Plant disease &amp; stress detection</span>
+            <span class="pill pill-tag">Row navigation &amp; obstacle avoidance</span>
+          </div>
+          <div class="hero-card-footer">
+            <span>First on‑site demos: 2026 • Hasselt</span>
+            <span>Tomatoes, peppers, cucumbers</span>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section class="section" id="product">
+      <h2>The Product – NVIDIA‑Native Greenhouse Robot</h2>
+      <p class="section-sub">
+        A modular, NVIDIA‑powered robot that patrols greenhouse rows, analyzes plants in real time,
+        and helps growers react early to disease, stress, and inefficiencies.
+      </p>
+      <div class="grid-2">
+        <ul class="clean">
+          <li><strong>Vision on Jetson Orin.</strong> Multi‑camera plant monitoring with real‑time inference: disease spots, pest traces, nutrient stress patterns.</li>
+          <li><strong>Isaac ROS navigation.</strong> Visual SLAM and 3D mapping enabling safe autonomous driving between narrow greenhouse rows.</li>
+          <li><strong>Isaac Sim‑trained models.</strong> Synthetic greenhouse scenes to pre‑train and stress‑test perception models before real deployment.</li>
+          <li><strong>Farmer‑friendly insights.</strong> Simple dashboard: plant health heatmaps, alert timelines, suggested follow‑ups.</li>
+        </ul>
+        <div class="demo-card">
+          <div class="demo-label">Tech Stack</div>
+          <div class="demo-title">Bakerstreet NVIDIA Robotics Stack</div>
+          <ul class="clean">
+            <li>Jetson AGX Orin running TensorRT‑optimized vision models</li>
+            <li>Isaac ROS 3.x for Visual SLAM, Nvblox, and perception nodes</li>
+            <li>Isaac Sim for synthetic plant &amp; environment generation (HIL)</li>
+            <li>Python / ROS 2 for control logic and data logging</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag">JetPack 6.x</span>
+            <span class="tag">ROS 2 Humble</span>
+            <span class="tag">TensorRT</span>
+            <span class="tag">Omniverse</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <h2>Real Glasshouse Demo (Coming Online)</h2>
+      <p class="section-sub">
+        We operate three large glasshouses in the Belgian countryside as a full‑time NVIDIA
+        robotics playground. This is where simulations meet real crops.
+      </p>
+      <div class="demo-grid">
+        <div>
+          <p class="hero-lead">
+            As of early 2026, we are wiring up our first end‑to‑end NVIDIA pipeline:
+            Isaac Sim scenes that match our real glasshouses, Isaac ROS running on Jetson Orin,
+            and robots driving actual rows between plants.
+          </p>
+          <p class="hero-lead">Photos and video from the glasshouses will be added here as soon as we finalize the first stable demo run.</p>
+          <div class="demo-meta">
+            Planned media:
+            <ul class="clean" style="margin-top:8px;">
+              <li><strong>Short video:</strong> robot navigating rows and overlaying plant detections</li>
+              <li><strong>Photo series:</strong> hardware setup, Jetson Orin integration, sensor layout</li>
+              <li><strong>Technical blog:</strong> Isaac Sim → Isaac ROS → Jetson workflow in detail</li>
+            </ul>
+          </div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-label">Media Links</div>
+          <div class="demo-title">Add these once you have footage</div>
+          <ul class="clean">
+            <li><strong>Demo video:</strong> YouTube / Vimeo link — coming soon</li>
+            <li><strong>Photo gallery:</strong> GitHub Pages gallery — coming soon</li>
+            <li><strong>Technical write‑up:</strong> Blog / README — coming soon</li>
           </ul>
         </div>
-        <button id="buy-security" class="btn-primary">Buy Security Suite →</button>
       </div>
+    </section>
 
-      <div class="template-card">
-        <div class="template-header">
-          <h3>💳 Stripe Payment Integration</h3>
-          <p>Complete payment processing for selling templates</p>
-          <div class="price">$149<span class="period">/one-time</span></div>
-          <ul class="features">
-            <li>Checkout session creation</li>
-            <li>Webhook handler implementation</li>
-            <li>Package delivery system</li>
-            <li>Email notifications</li>
-            <li>Customer portal integration</li>
-          </ul>
+    <section class="section" id="team">
+      <h2>Team</h2>
+      <p class="section-sub">Two people, one mission: ship real NVIDIA‑powered robots into real greenhouses.</p>
+      <div class="team-grid">
+        <div class="person">
+          <div class="person-role">Founder · Developer · Everything</div>
+          <div class="person-name">Kiliaan Vanvoorden</div>
+          <p class="person-body">
+            Builds the robots, writes the code, drives the strategy, ships the product.
+            Hands‑on AI/ML engineering on NVIDIA Jetson, Linux systems, containerized deployments,
+            and the full Isaac Sim → Isaac ROS → Jetson pipeline for greenhouse robotics.
+            The entire engine of the project.
+          </p>
+          <p style="margin-top:10px;font-size:0.85rem;">
+            <a href="mailto:bakerstreetbandit@zohomail.eu">bakerstreetbandit@zohomail.eu</a>
+          </p>
         </div>
-        <button id="buy-stripe" class="btn-primary">Buy Stripe Integration →</button>
-      </div>
-
-      <div class="template-card">
-        <div class="template-header">
-          <h3>🤖 Perplexity AI Integration</h3>
-          <p>Chat history recovery and research automation</p>
-          <div class="price">$179<span class="period">/one-time</span></div>
-          <ul class="features">
-            <li>Chat history persistence</li>
-            <li>Research query automation</li>
-            <li>Data aggregation engine</li>
-            <li>Report generation system</li>
-            <li>Browser automation scripts</li>
-          </ul>
+        <div class="person">
+          <div class="person-role">Co-founder · Communication &amp; Advisory</div>
+          <div class="person-name">Paulien Briers</div>
+          <p class="person-body">
+            Communication, narrative, and external relations. Advisory partner for
+            sponsorship, housing, and logistics. Supports funding outreach and commercial
+            conversations.
+          </p>
+          <p style="margin-top:10px;font-size:0.85rem;">
+            <a href="mailto:paulienbriers@zohomail.eu">paulienbriers@zohomail.eu</a>
+          </p>
         </div>
-        <button id="buy-perplexity" class="btn-primary">Buy Perplexity Integration →</button>
       </div>
+    </section>
 
-      <div class="template-card">
-        <div class="template-header">
-          <h3>🎨 GitHub Profile Professionalization</h3>
-          <p>Automated profile transformation for enterprise</p>
-          <div class="price">$99<span class="period">/one-time</span></div>
-          <ul class="features">
-            <li>Profile README generation</li>
-            <li>Organization branding</li>
-            <li>Sponsor tiers setup</li>
-            <li>Security hardening scripts</li>
-            <li>Batch repo operations</li>
-          </ul>
+    <section class="section" id="contact">
+      <h2>Pilots, Partners, and Funding</h2>
+      <p class="section-sub">
+        Looking for: greenhouse operators, early‑stage investors, and technical partners
+        who want to push NVIDIA‑based robotics in agriculture.
+      </p>
+      <div class="grid-2">
+        <ul class="clean">
+          <li><strong>Pilot glasshouses.</strong> Operate greenhouses in Belgium / Netherlands? Test NVIDIA‑powered robots on‑site.</li>
+          <li><strong>Seed funding.</strong> Seed‑stage support to accelerate hardware builds, Isaac Sim environments, and Isaac ROS deployments.</li>
+          <li><strong>Research collaboration.</strong> Universities and labs interested in controlled experiments on real crops with Jetson / Isaac.</li>
+        </ul>
+        <div>
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px;">
+            <strong>Kiliaan Vanvoorden</strong> – Founder &amp; Robotics Engineer<br/>
+            <a href="mailto:bakerstreetbandit@zohomail.eu">bakerstreetbandit@zohomail.eu</a><br/><br/>
+            <strong>Paulien Briers</strong> – Communication &amp; Advisory<br/>
+            <a href="mailto:paulienbriers@zohomail.eu">paulienbriers@zohomail.eu</a>
+          </p>
+          <form class="contact-form" action="mailto:bakerstreetbandit@zohomail.eu" method="post" enctype="text/plain">
+            <input type="text" name="name" placeholder="Your name" required />
+            <input type="email" name="email" placeholder="Your email" required />
+            <textarea name="message" rows="3" placeholder="How would you like to collaborate?"></textarea>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+              <span class="icon">✉</span> Send message
+            </button>
+          </form>
         </div>
-        <button id="buy-profile" class="btn-primary">Buy Profile Kit →</button>
       </div>
+    </section>
 
-      <div class="template-card">
-        <div class="template-header">
-          <h3>👁️ Watermarking & Attribution System</h3>
-          <p>Digital watermarking for generated content</p>
-          <div class="price">$199<span class="period">/one-time</span></div>
-          <ul class="features">
-            <li>Invisible watermarking engine</li>
-            <li>Content tracking system</li>
-            <li>Metadata injection</li>
-            <li>Batch processing tools</li>
-            <li>License enforcement</li>
-          </ul>
-        </div>
-        <button id="buy-watermark" class="btn-primary">Buy Watermarking System →</button>
-      </div>
-
-      <div class="template-card">
-        <div class="template-header">
-          <h3>📚 Complete Template Package</h3>
-          <p>All enterprise templates + future updates</p>
-          <div class="price">$999<span class="period">/lifetime</span></div>
-          <ul class="features">
-            <li>✅ All 10 template categories</li>
-            <li>✅ Lifetime updates & support</li>
-            <li>✅ Priority email support</li>
-            <li>✅ Early access to new features</li>
-            <li>✅ Custom template requests</li>
-          </ul>
-        </div>
-        <button id="buy-complete" class="btn-primary">Buy Complete Package →</button>
-      </div>
-    </div>
-
-    <div class="payment-buttons">
-      <button class="btn-secondary" onclick="sponsorGitHub()">❤️ Sponsor on GitHub</button>
-      <button class="btn-secondary" onclick="contactEnterprise()">🏢 Enterprise Inquiry</button>
-    </div>
-  </div>
-
-  <div class="footer">
-    <p>© 2024 Baker Street Project | <a href="mailto:bakerstreetbandit@zohomail.com">Contact</a> | <a href="https://github.com/BoozeLee" target="_blank">GitHub</a></p>
-  </div>
-
-  <!-- Stripe Checkout Modal -->
-  <div id="checkout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Complete Your Purchase</h2>
-      <div id="payment-element"></div>
-      <div id="error-message" class="error-message"></div>
-      <div id="success-message" class="success-message">
-        Success! Check your email for the template.
-      </div>
-      <button id="submit-payment" class="btn-primary">Pay Now</button>
-    </div>
+    <footer>
+      <span>© 2026 Bakerstreet Project – NVIDIA‑Powered Agricultural Robotics</span>
+      <span>Site focused on greenhouse robotics. Other experiments live in separate repos.</span>
+    </footer>
   </div>
 
   <script>
-    // Stripe initialization
-    const stripe = Stripe('pk_live_YOUR_PUBLISHABLE_KEY');
-    let elements;
+    const btn   = document.getElementById('theme-toggle');
+    const icon  = document.getElementById('theme-icon');
+    const label = document.getElementById('theme-label');
 
-    // Product configurations
-    const products = {
-      'buy-security': 'price_enterprise_security',
-      'buy-stripe': 'price_stripe_integration',
-      'buy-perplexity': 'price_perplexity_integration',
-      'buy-profile': 'price_profile_kit',
-      'buy-watermark': 'price_watermark_system',
-      'buy-complete': 'price_complete_package'
-    };
-
-    // Event listeners for purchase buttons
-    Object.keys(products).forEach(buttonId => {
-      document.getElementById(buttonId).addEventListener('click', () => {
-        const productId = products[buttonId];
-        initializeCheckout(productId);
-      });
-    });
-
-    async function initializeCheckout(productId) {
-      // Hide messages
-      document.getElementById('error-message').style.display = 'none';
-      document.getElementById('success-message').style.display = 'none';
-
-      // Create checkout session
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId })
-      });
-
-      const { sessionId } = await response.json();
-
-      // Show modal with Stripe
-      document.getElementById('checkout-modal').style.display = 'flex';
-
-      // Initialize Stripe Elements
-      elements = stripe.elements({ clientSecret: 'client_secret' });
-      const paymentElement = elements.create('payment');
-      paymentElement.mount('#payment-element');
-    }
-
-    // Payment submission
-    document.getElementById('submit-payment').addEventListener('click', async () => {
-      const { error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/success?product_id=template`
-        }
-      });
-
-      if (error) {
-        document.getElementById('error-message').textContent = error.message;
-        document.getElementById('error-message').style.display = 'block';
+    function applyTheme(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        icon.textContent  = '☀️';
+        label.textContent = 'Dark mode';
+      } else {
+        document.body.classList.remove('light');
+        icon.textContent  = '🌙';
+        label.textContent = 'Light mode';
       }
+    }
+
+    applyTheme(localStorage.getItem('bakerstreet-theme') || 'dark');
+
+    btn.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem('bakerstreet-theme', next);
     });
-
-    // Modal close
-    document.querySelector('.close').addEventListener('click', () => {
-      document.getElementById('checkout-modal').style.display = 'none';
-      elements = null;
-    });
-
-    // GitHub Sponsors
-    function sponsorGitHub() {
-      window.open('https://github.com/sponsors/BoozeLee', '_blank');
-    }
-
-    // Enterprise contact
-    function contactEnterprise() {
-      window.location.href = 'mailto:bakerstreetbandit@zohomail.com?subject=Enterprise Inquiry';
-    }
-
-    // Analytics tracking
-    if (typeof gtag !== 'undefined') {
-      // Track button clicks
-      Object.keys(products).forEach(buttonId => {
-        document.getElementById(buttonId).addEventListener('click', () => {
-          gtag('event', 'purchase_click', {
-            event_category: 'Commerce',
-            event_label: buttonId,
-            value: 1
-          });
-        });
-      });
-    }
   </script>
 </body>
 </html>
