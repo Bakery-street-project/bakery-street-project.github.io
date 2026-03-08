@@ -2,1271 +2,568 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Baker Street Project — Privacy-First AI Infrastructure</title>
-  <meta name="description" content="AutomationCodex ecosystem. NVIDIA NIM cloud infrastructure. Privacy-first enterprise AI for serious builders. Founded by Kiliaan Vanvoorden." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <title>Bakerstreet Project – NVIDIA-Powered Agricultural Robotics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Bakerstreet Project builds NVIDIA Jetson, Isaac Sim, and Isaac ROS powered agricultural robots for greenhouse farming in Belgium." />
+
   <style>
     :root {
-      --ink: #0A0C0F;
-      --ink2: #111418;
-      --ink3: #1A1F26;
-      --gold: #C8A84B;
-      --gold2: #E8C86A;
-      --gold-dim: #7a6529;
-      --fog: #8A9099;
-      --mist: #C2C8D0;
-      --white: #F0EDE6;
-      --navy: #1A3A5C;
-      --green: #2A6B3C;
-      --red: #8B2A2A;
+      --bg: #020617;
+      --bg-elevated: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --nvidia: #76b900;
+      --danger: #ef4444;
+      --radius: 14px;
     }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--ink);
-      color: var(--white);
-      font-family: 'Syne', sans-serif;
-      font-size: 16px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%);
+      color: var(--text);
       line-height: 1.6;
-      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: #f3f4f6;
+      color: #111827;
+    }
+    body.light .section,
+    body.light .hero-card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+    }
+    body.light .badge,
+    body.light .chip,
+    body.light .pill,
+    body.light .tag {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+      color: #111827;
+    }
+    body.light .hero-lead,
+    body.light .section-sub,
+    body.light .person-body,
+    body.light .demo-meta,
+    body.light ul.clean {
+      color: #4b5563;
+    }
+    body.light footer {
+      border-top-color: #e5e7eb;
+      color: #6b7280;
+    }
+    body.light .person {
+      background: #fff;
+      border-color: #e5e7eb;
+    }
+    body.light .demo-card {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
     }
 
-    /* ── GRAIN OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.028;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--ink); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
-
-    /* ── TYPOGRAPHY ── */
-    .display { font-family: 'DM Serif Display', serif; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
-
-    a { color: inherit; text-decoration: none; }
-    a:hover { color: var(--gold); }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 48px;
-      height: 64px;
-      background: rgba(10, 12, 15, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(200, 168, 75, 0.15);
-      transition: border-color 0.3s;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .nav-logo-mark {
-      width: 32px; height: 32px;
-      border: 1.5px solid var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'DM Serif Display', serif;
-      font-size: 16px;
-      color: var(--gold);
-      position: relative;
-    }
-    .nav-logo-mark::before {
-      content: '';
-      position: absolute;
-      inset: 3px;
-      background: rgba(200,168,75,0.07);
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--fog);
-    }
-    .nav-links a { transition: color 0.2s; }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-cta {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 8px 20px;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      transition: all 0.2s;
-    }
-    .nav-cta:hover { background: var(--gold); color: var(--ink); }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
+    header {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 120px 48px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-grid-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-    }
-
-    .hero-glow {
-      position: absolute;
-      top: 20%; left: -10%;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-glow2 {
-      position: absolute;
-      bottom: 0; right: -5%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(26,58,92,0.3) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-content { position: relative; max-width: 900px; }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      padding: 6px 14px;
-      border: 1px solid rgba(200,168,75,0.3);
-      background: rgba(200,168,75,0.05);
-      margin-bottom: 32px;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s ease forwards;
-    }
-    .hero-badge::before { content: '●'; font-size: 7px; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-    h1.hero-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(52px, 7vw, 92px);
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      opacity: 0;
-      animation: fadeUp 0.9s 0.35s ease forwards;
-    }
-    h1.hero-title em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .hero-sub {
-      margin-top: 28px;
-      font-size: 17px;
-      line-height: 1.7;
-      color: var(--fog);
-      max-width: 560px;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.5s ease forwards;
-    }
-
-    .hero-actions {
-      margin-top: 48px;
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.65s ease forwards;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      background: var(--gold);
-      color: var(--ink);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.2s;
-    }
-    .btn-primary:hover { background: var(--gold2); color: var(--ink); transform: translateY(-1px); }
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border: 1px solid rgba(200,168,75,0.35);
-      color: var(--gold);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.2s;
-    }
-    .btn-ghost:hover { border-color: var(--gold); background: rgba(200,168,75,0.08); color: var(--gold); }
-
-    .hero-stats {
-      margin-top: 72px;
-      display: flex;
-      gap: 0;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.8s ease forwards;
-    }
-    .hero-stat {
-      padding: 20px 32px;
-      border-left: 1px solid rgba(200,168,75,0.2);
-    }
-    .hero-stat:first-child { padding-left: 0; border-left: none; }
-    .hero-stat-value {
-      font-family: 'DM Serif Display', serif;
-      font-size: 36px;
-      color: var(--gold);
-      line-height: 1;
-    }
-    .hero-stat-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--fog);
-      margin-top: 4px;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── NVIDIA BADGE STRIP ── */
-    .nvidia-strip {
-      background: var(--ink2);
-      border-top: 1px solid rgba(200,168,75,0.15);
-      border-bottom: 1px solid rgba(200,168,75,0.15);
-      padding: 20px 48px;
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      overflow-x: auto;
-    }
-    .nvidia-strip-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .nvidia-badges {
-      display: flex;
       gap: 12px;
-      flex-wrap: wrap;
+      margin-bottom: 40px;
     }
-    .nvidia-badge {
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .badge {
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      padding: 4px 10px;
+      background: rgba(15,23,42,0.8);
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 14px;
-      background: rgba(118, 185, 0, 0.08);
-      border: 1px solid rgba(118, 185, 0, 0.25);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: #76B900;
-      white-space: nowrap;
     }
-    .nvidia-badge::before { content: '✓'; }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .badge-nvidia { border-color: var(--nvidia); color: var(--nvidia); }
 
-    /* ── SECTION COMMONS ── */
-    section { padding: 100px 48px; }
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-      display: flex;
+    /* theme toggle */
+    #theme-toggle {
+      margin-left: auto;
+      background: rgba(15,23,42,0.8);
+      border: 1px solid #374151;
+      border-radius: 999px;
+      padding: 5px 14px;
+      color: var(--text);
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 6px;
+      transition: border-color 0.2s;
     }
-    .section-label::before {
-      content: '';
-      display: inline-block;
-      width: 32px; height: 1px;
-      background: var(--gold);
-    }
-    h2.section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(36px, 4vw, 54px);
-      line-height: 1.1;
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-    h2.section-title em { font-style: italic; color: var(--gold); }
-    .section-body {
-      font-size: 16px;
-      line-height: 1.8;
-      color: var(--fog);
-      max-width: 580px;
-    }
+    #theme-toggle:hover { border-color: var(--nvidia); }
+    body.light #theme-toggle { background: #fff; color: #111827; border-color: #d1d5db; }
 
-    /* ── ABOUT ── */
-    #about {
-      background: var(--ink2);
-    }
-    .about-grid {
+    .hero {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-      max-width: 1200px;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 32px;
+      align-items: center;
     }
-    .about-right {
-      padding-top: 20px;
+    @media (max-width: 880px) { .hero { grid-template-columns: minmax(0, 1fr); } }
+
+    h1 {
+      font-size: clamp(2.4rem, 4vw, 3.1rem);
+      font-weight: 750;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 10px;
     }
-    .founder-card {
-      background: var(--ink3);
-      border: 1px solid rgba(200,168,75,0.15);
-      padding: 32px;
-      margin-top: 32px;
-      position: relative;
+    .hero-lead {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 34rem;
+      margin-bottom: 18px;
     }
-    .founder-card::before {
-      content: '221B';
-      position: absolute;
-      top: -1px; right: 24px;
-      background: var(--gold);
-      color: var(--ink);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      letter-spacing: 0.1em;
-    }
-    .founder-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 26px;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-    .founder-alias {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-      margin-bottom: 16px;
-    }
-    .founder-bio { font-size: 14px; color: var(--fog); line-height: 1.7; }
-    .founder-tags {
+    .hero-highlight { color: var(--nvidia); font-weight: 600; }
+
+    .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 20px;
-    }
-    .tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      padding: 4px 10px;
-      border: 1px solid rgba(200,168,75,0.25);
-      color: var(--gold);
-      background: rgba(200,168,75,0.05);
-    }
-
-    /* ── PRODUCTS ── */
-    #technology { background: var(--ink); }
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(200,168,75,0.1);
-      border: 1px solid rgba(200,168,75,0.1);
-      margin-top: 60px;
-    }
-    .product-card {
-      background: var(--ink2);
-      padding: 40px 32px;
-      position: relative;
-      transition: background 0.3s;
-      overflow: hidden;
-    }
-    .product-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .product-card:hover { background: var(--ink3); }
-    .product-card:hover::after { transform: scaleX(1); }
-    .product-card.featured {
-      background: linear-gradient(135deg, rgba(200,168,75,0.06) 0%, var(--ink3) 100%);
-    }
-    .product-card.featured::before {
-      content: 'FLAGSHIP';
-      position: absolute;
-      top: 20px; right: 20px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      color: var(--gold);
-      border: 1px solid rgba(200,168,75,0.3);
-      padding: 3px 8px;
-    }
-    .product-icon {
-      width: 44px; height: 44px;
-      border: 1px solid rgba(200,168,75,0.25);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      margin-bottom: 24px;
-    }
-    .product-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .product-tech {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      text-transform: uppercase;
+      gap: 12px;
       margin-bottom: 14px;
     }
-    .product-desc {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--fog);
-      margin-bottom: 24px;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
     }
-    .product-link {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      text-transform: uppercase;
+    .btn-primary {
+      background: linear-gradient(135deg, var(--nvidia), #a3e635);
+      color: #020617;
+      border-color: #4d7c0f;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+    .btn-primary:hover { text-decoration: none; filter: brightness(1.1); }
+    .btn-outline { border-color: #374151; background: rgba(15,23,42,0.8); }
+    .btn-outline:hover { text-decoration: none; border-color: var(--nvidia); }
+    .btn span.icon { font-size: 1rem; }
+
+    .hero-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .metric { min-width: 140px; }
+    .metric-label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; color: #6b7280; }
+    .metric-value { font-size: 1rem; font-weight: 600; color: var(--accent); }
+
+    .hero-card {
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), transparent 60%),
+                  linear-gradient(145deg, #020617, #020617 40%, #0b1120);
+      border: 1px solid #1f2937;
+      padding: 18px 18px 16px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.7);
+    }
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .chip {
+      border-radius: 999px;
+      padding: 3px 10px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid #1f2937;
+      font-size: 0.72rem;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: gap 0.2s;
     }
-    .product-link:hover { color: var(--gold2); gap: 10px; }
-
-    /* ── PORTFOLIO ── */
-    #portfolio { background: var(--ink2); }
-    .portfolio-list {
-      margin-top: 60px;
+    .chip-nvidia { border-color: var(--nvidia); color: var(--nvidia); }
+    .hero-card-body { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; font-size: 0.7rem; }
+    .pill {
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid #1f2937;
+      color: #e5e7eb;
+    }
+    .pill-tag { border-color: rgba(148,163,184,0.5); color: #9ca3af; }
+    .hero-card-footer {
       display: flex;
-      flex-direction: column;
-      gap: 0;
-      border: 1px solid rgba(200,168,75,0.12);
-    }
-    .portfolio-item {
-      display: grid;
-      grid-template-columns: 200px 1fr auto;
-      gap: 32px;
-      align-items: center;
-      padding: 24px 32px;
-      border-bottom: 1px solid rgba(200,168,75,0.08);
-      transition: background 0.2s;
-    }
-    .portfolio-item:last-child { border-bottom: none; }
-    .portfolio-item:hover { background: rgba(200,168,75,0.04); }
-    .portfolio-name {
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--white);
-    }
-    .portfolio-tech-pill {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 2px 8px;
-      border: 1px solid rgba(200,168,75,0.2);
-      color: var(--gold);
-      margin-top: 4px;
-      display: inline-block;
-    }
-    .portfolio-desc {
-      font-size: 14px;
-      color: var(--fog);
-      line-height: 1.6;
-    }
-    .portfolio-status {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 4px 10px;
-      white-space: nowrap;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .status-active { color: #4CAF50; border: 1px solid rgba(76,175,80,0.3); background: rgba(76,175,80,0.06); }
-    .status-dev { color: var(--gold); border: 1px solid rgba(200,168,75,0.3); background: rgba(200,168,75,0.06); }
-    .status-concept { color: var(--fog); border: 1px solid rgba(138,144,153,0.3); }
-    .portfolio-github {
-      display: block;
-      margin-top: 40px;
-      text-align: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      color: var(--fog);
-      text-transform: uppercase;
-    }
-    .portfolio-github span { color: var(--gold); }
-    .portfolio-github:hover { color: var(--gold); }
-
-    /* ── PRICING ── */
-    #monetization { background: var(--ink); }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 60px;
-    }
-    .pricing-card {
-      border: 1px solid rgba(200,168,75,0.15);
-      padding: 40px 32px;
-      background: var(--ink2);
-      position: relative;
-      transition: border-color 0.3s;
-    }
-    .pricing-card:hover { border-color: rgba(200,168,75,0.4); }
-    .pricing-card.featured {
-      border-color: var(--gold);
-      background: linear-gradient(160deg, rgba(200,168,75,0.07) 0%, var(--ink2) 60%);
-    }
-    .pricing-card.featured::before {
-      content: 'Most Popular';
-      position: absolute;
-      top: -1px; left: 50%;
-      transform: translateX(-50%);
-      background: var(--gold);
-      color: var(--ink);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 4px 16px;
-      white-space: nowrap;
-    }
-    .pricing-tier {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    .pricing-price {
-      font-family: 'DM Serif Display', serif;
-      font-size: 48px;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .pricing-price span {
-      font-family: 'Syne', sans-serif;
-      font-size: 16px;
-      color: var(--fog);
-      font-weight: 400;
-    }
-    .pricing-desc {
-      font-size: 14px;
-      color: var(--fog);
-      margin: 16px 0 28px;
-      line-height: 1.6;
-    }
-    .pricing-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
-    .pricing-features li {
-      font-size: 13px;
-      color: var(--mist);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-    .pricing-features li::before {
-      content: '→';
-      color: var(--gold);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .pricing-cta {
-      display: block;
-      text-align: center;
-      padding: 12px 24px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.2s;
-    }
-    .pricing-cta-outline {
-      border: 1px solid rgba(200,168,75,0.35);
-      color: var(--gold);
-    }
-    .pricing-cta-outline:hover { background: rgba(200,168,75,0.08); border-color: var(--gold); }
-    .pricing-cta-solid {
-      background: var(--gold);
-      color: var(--ink);
-    }
-    .pricing-cta-solid:hover { background: var(--gold2); }
-
-    /* ── LAB ── */
-    #lab { background: var(--ink2); }
-    .lab-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 60px;
-    }
-    .lab-card {
-      padding: 32px;
-      border: 1px solid rgba(200,168,75,0.1);
-      background: var(--ink);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s;
-    }
-    .lab-card:hover { border-color: rgba(200,168,75,0.3); }
-    .lab-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: var(--gold);
-      opacity: 0.4;
-    }
-    .lab-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-    }
-    .lab-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 22px;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-    .lab-body { font-size: 14px; color: var(--fog); line-height: 1.7; }
-
-    .research-note {
-      margin-top: 48px;
-      padding: 32px 40px;
-      border: 1px solid rgba(200,168,75,0.2);
-      background: rgba(200,168,75,0.04);
-      position: relative;
-    }
-    .research-note::before {
-      content: '"';
-      position: absolute;
-      top: 16px; left: 32px;
-      font-family: 'DM Serif Display', serif;
-      font-size: 72px;
-      color: rgba(200,168,75,0.15);
-      line-height: 1;
-    }
-    .research-note blockquote {
-      font-family: 'DM Serif Display', serif;
-      font-size: 22px;
-      font-style: italic;
-      color: var(--mist);
-      line-height: 1.5;
-      padding-left: 20px;
-    }
-    .research-note cite {
-      display: block;
-      margin-top: 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      padding-left: 20px;
-    }
-
-    /* ── CONTACT ── */
-    #contact {
-      background: var(--ink);
-      text-align: center;
-    }
-    .contact-inner {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-    .contact-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 40px;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-top: 48px;
-      flex-wrap: wrap;
-    }
-    .contact-link-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-    .contact-link-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--fog);
-    }
-    .contact-link-value {
-      font-size: 14px;
-      color: var(--gold);
-      transition: color 0.2s;
-    }
-    .contact-link-value:hover { color: var(--gold2); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--ink2);
-      border-top: 1px solid rgba(200,168,75,0.15);
-      padding: 32px 48px;
-      display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .section {
+      margin-top: 48px;
+      padding: 24px 20px;
+      border-radius: var(--radius);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid #1f2937;
+    }
+    .section h2 { font-size: 1.3rem; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .section-sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 18px; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
       gap: 24px;
+    }
+    @media (max-width: 880px) { .grid-2 { grid-template-columns: minmax(0,1fr); } }
+
+    ul.clean { list-style: none; padding-left: 0; font-size: 0.9rem; color: var(--text-muted); }
+    ul.clean li { margin-bottom: 10px; padding-left: 18px; position: relative; }
+    ul.clean li::before { content: "•"; position: absolute; left: 0; color: var(--accent); font-size: 1rem; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; font-size: 0.75rem; }
+    .tag {
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 20px;
+      font-size: 0.9rem;
+    }
+    .person {
+      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid #1f2937;
+      padding: 16px 16px 14px;
+    }
+    .person-role { font-size: 0.8rem; color: var(--nvidia); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .person-name { font-weight: 600; margin-bottom: 6px; font-size: 1rem; }
+    .person-body { color: var(--text-muted); font-size: 0.85rem; }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+      gap: 22px;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 880px) { .demo-grid { grid-template-columns: minmax(0,1fr); } }
+    .demo-card {
+      border-radius: 16px;
+      background: radial-gradient(circle at top left, rgba(118,185,0,0.15), transparent 60%), #020617;
+      border: 1px solid #1f2937;
+      padding: 16px 16px 14px;
+    }
+    .demo-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .demo-title { font-weight: 600; margin-bottom: 6px; }
+    .demo-meta { margin-top: 12px; font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Contact form */
+    .contact-form { margin-top: 10px; }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #374151;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--nvidia); }
+    body.light .contact-form input,
+    body.light .contact-form textarea { background: #fff; color: #111827; border-color: #d1d5db; }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #1f2937;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
       flex-wrap: wrap;
-    }
-    .footer-brand {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--fog);
-    }
-    .footer-brand strong { color: var(--gold); }
-    .footer-right {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--fog);
-    }
-    .footer-right a { color: var(--gold-dim); transition: color 0.2s; }
-    .footer-right a:hover { color: var(--gold); }
-
-    /* ── REVEAL ANIMATIONS ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      nav { padding: 0 24px; }
-      .nav-links { display: none; }
-      section { padding: 72px 24px; }
-      #hero { padding: 100px 24px 60px; }
-      .about-grid { grid-template-columns: 1fr; gap: 48px; }
-      .products-grid { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; }
-      .lab-grid { grid-template-columns: 1fr; }
-      .portfolio-item { grid-template-columns: 1fr; gap: 8px; }
-      .hero-stats { flex-direction: column; gap: 16px; }
-      .hero-stat { border-left: none; padding-left: 0; }
-      .nvidia-strip { padding: 16px 24px; }
-      footer { flex-direction: column; text-align: center; }
+      gap: 8px;
+      justify-content: space-between;
     }
   </style>
 </head>
 <body>
-
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">
-      <div class="nav-logo-mark">B</div>
-      Baker Street Project
-    </div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#technology">Technology</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#monetization">Plans</a></li>
-      <li><a href="#lab">Research</a></li>
-    </ul>
-    <a class="nav-cta" href="mailto:kiliaan@bakerstreetproject221b.store">Contact Us</a>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-glow2"></div>
-    <div class="hero-content">
-      <div class="hero-badge">Baker Street Project · Hasselt, Belgium · Est. 2024</div>
-      <h1 class="hero-title display">
-        Privacy-First<br /><em>AI Infrastructure</em><br />for Serious Builders
-      </h1>
-      <p class="hero-sub">
-        The AutomationCodex ecosystem. Enterprise AI developer tooling, multi-agent research automation, and quantum-inspired optimization — all powered by NVIDIA NIM. Your data never leaves your control.
-      </p>
-      <div class="hero-actions">
-        <a href="#portfolio" class="btn-primary">Explore Projects →</a>
-        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="btn-ghost">Get in Touch</a>
+  <div class="page">
+    <header>
+      <div class="badge-row">
+        <span class="badge badge-nvidia">
+          <span class="badge-dot"></span>
+          NVIDIA Jetson • Isaac Sim • Isaac ROS
+        </span>
+        <span class="badge">
+          🌱 Greenhouse Robotics • Hasselt, Belgium
+        </span>
+        <button id="theme-toggle" type="button">
+          <span id="theme-icon">🌙</span> <span id="theme-label">Light mode</span>
+        </button>
       </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-value display">90+</div>
-          <div class="hero-stat-label">Repositories</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value display">3</div>
-          <div class="hero-stat-label">Product Lines</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value display">NVIDIA</div>
-          <div class="hero-stat-label">NIM Certified</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value display">ORCID</div>
-          <div class="hero-stat-label">Researcher</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- NVIDIA STRIP -->
-  <div class="nvidia-strip">
-    <span class="nvidia-strip-label">Credentials</span>
-    <div class="nvidia-badges">
-      <span class="nvidia-badge">NVIDIA Developer Program Member</span>
-      <span class="nvidia-badge">NVIDIA NIM API Approved</span>
-      <span class="nvidia-badge">NVIDIA Inception Eligible</span>
-      <span class="nvidia-badge">NVIDIA Deep Learning Institute</span>
-      <span class="nvidia-badge">GitHub Developer Program</span>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="about-grid reveal">
-      <div class="about-left">
-        <div class="section-label">About</div>
-        <h2 class="section-title display">Built on the<br /><em>Baker Street</em><br />Principle</h2>
-        <p class="section-body">
-          Like Sherlock Holmes at 221B, Baker Street Project approaches every hard problem with systematic reasoning, unconventional methods, and the conviction that no challenge is truly unsolvable. We build AI infrastructure that doesn't compromise on privacy, performance, or ambition.
-        </p>
-        <p class="section-body" style="margin-top:16px;">
-          Automation-first. Privacy-native. Enterprise-grade. NVIDIA-powered. We are building the tooling layer that lets serious organizations deploy frontier AI on their own terms.
-        </p>
-      </div>
-      <div class="about-right">
-        <div class="founder-card">
-          <div class="founder-name display">Kiliaan Vanvoorden</div>
-          <div class="founder-alias mono">— aka BoozeLee</div>
-          <p class="founder-bio">
-            AI Training Specialist, AutomationCodex creator, and founder of Baker Street Project. Self-taught developer who in two years built a 90+ repository portfolio spanning enterprise AI tooling, multi-agent research systems, quantum-inspired optimization, and privacy-first cloud infrastructure. ORCID-registered researcher applying AI to disease, climate, and scientific discovery.
+      <div class="hero">
+        <div>
+          <h1>NVIDIA‑Powered Agricultural Robotics for Greenhouses</h1>
+          <p class="hero-lead">
+            <span class="hero-highlight">Bakerstreet Project</span> builds AI‑driven robots for
+            European greenhouses, combining NVIDIA Jetson Orin, Isaac Sim, and Isaac ROS to turn
+            labor‑intensive farming into precise, autonomous operations.
           </p>
-          <div class="founder-tags">
-            <span class="tag">Python</span>
-            <span class="tag">Go</span>
-            <span class="tag">TypeScript</span>
-            <span class="tag">NVIDIA NIM</span>
-            <span class="tag">Ollama</span>
-            <span class="tag">Linux</span>
-            <span class="tag">Android AI</span>
-            <span class="tag">Multi-Agent</span>
+          <p class="hero-lead">
+            After relocating to the countryside and gaining access to three large glasshouses,
+            we focus fully on one mission: <strong>deploy real NVIDIA‑based robots in real farms</strong>,
+            starting in Belgium and scaling across Europe.
+          </p>
+          <div class="hero-cta-row">
+            <a href="#demo" class="btn btn-primary">
+              <span class="icon">▶</span> Watch Greenhouse Demo (soon)
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <span class="icon">✉</span> Talk about pilots or funding
+            </a>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric">
+              <div class="metric-label">Test Sites</div>
+              <div class="metric-value">3× glasshouses</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Edge AI</div>
+              <div class="metric-value">Jetson Orin</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Simulation</div>
+              <div class="metric-value">Isaac Sim</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div class="hero-card-header">
+            <span class="chip chip-nvidia">NVIDIA Greenhouse Stack</span>
+            <span class="chip">Prototype Phase • 2026</span>
+          </div>
+          <div class="hero-card-body">
+            <strong>Pipeline:</strong> Isaac Sim → Isaac ROS → Jetson Orin → Glasshouse robot.
+            We simulate crops and lighting, train with synthetic data, then deploy the same
+            perception and navigation stack into real greenhouses in Hasselt.
+          </div>
+          <div class="hero-pills">
+            <span class="pill">Jetson AGX Orin – 275 TOPS Edge AI</span>
+            <span class="pill">Isaac Sim synthetic greenhouse environments</span>
+            <span class="pill">Isaac ROS Visual SLAM &amp; Nvblox</span>
+            <span class="pill pill-tag">Plant disease &amp; stress detection</span>
+            <span class="pill pill-tag">Row navigation &amp; obstacle avoidance</span>
+          </div>
+          <div class="hero-card-footer">
+            <span>First on‑site demos: 2026 • Hasselt</span>
+            <span>Tomatoes, peppers, cucumbers</span>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section class="section" id="product">
+      <h2>The Product – NVIDIA‑Native Greenhouse Robot</h2>
+      <p class="section-sub">
+        A modular, NVIDIA‑powered robot that patrols greenhouse rows, analyzes plants in real time,
+        and helps growers react early to disease, stress, and inefficiencies.
+      </p>
+      <div class="grid-2">
+        <ul class="clean">
+          <li><strong>Vision on Jetson Orin.</strong> Multi‑camera plant monitoring with real‑time inference: disease spots, pest traces, nutrient stress patterns.</li>
+          <li><strong>Isaac ROS navigation.</strong> Visual SLAM and 3D mapping enabling safe autonomous driving between narrow greenhouse rows.</li>
+          <li><strong>Isaac Sim‑trained models.</strong> Synthetic greenhouse scenes to pre‑train and stress‑test perception models before real deployment.</li>
+          <li><strong>Farmer‑friendly insights.</strong> Simple dashboard: plant health heatmaps, alert timelines, suggested follow‑ups.</li>
+        </ul>
+        <div class="demo-card">
+          <div class="demo-label">Tech Stack</div>
+          <div class="demo-title">Bakerstreet NVIDIA Robotics Stack</div>
+          <ul class="clean">
+            <li>Jetson AGX Orin running TensorRT‑optimized vision models</li>
+            <li>Isaac ROS 3.x for Visual SLAM, Nvblox, and perception nodes</li>
+            <li>Isaac Sim for synthetic plant &amp; environment generation (HIL)</li>
+            <li>Python / ROS 2 for control logic and data logging</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag">JetPack 6.x</span>
+            <span class="tag">ROS 2 Humble</span>
+            <span class="tag">TensorRT</span>
+            <span class="tag">Omniverse</span>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- TECHNOLOGY -->
-  <section id="technology">
-    <div class="section-label reveal">Technology</div>
-    <h2 class="section-title display reveal">The <em>AutomationCodex</em><br />Ecosystem</h2>
-    <p class="section-body reveal">Three interlocking product lines. One unified infrastructure. Zero data egress.</p>
-    <div class="products-grid reveal">
-
-      <div class="product-card featured">
-        <div class="product-icon">⚡</div>
-        <div class="product-name">AutomationCodex + NVIDIA NIM</div>
-        <div class="product-tech mono">NVIDIA NIM · Cloud Infrastructure</div>
-        <p class="product-desc">The most developed Baker Street asset. An approved NVIDIA NIM cloud backend powering optimized AI model inference, containerized deployment, and performance analysis. The engine behind everything we build.</p>
-        <a href="https://github.com/BoozeLee" class="product-link" target="_blank">GitHub →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">🤖</div>
-        <div class="product-name">go-ai-coder</div>
-        <div class="product-tech mono">Go · Ollama · GitHub API</div>
-        <p class="product-desc">Enterprise-grade AI coding assistant with local AI processing. GitHub integration, web scraping, CI/CD automation. Unlike Copilot — your code never leaves your machine.</p>
-        <a href="https://github.com/Bakery-street-project/go-ai-coder" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">🔬</div>
-        <div class="product-name">Polymorphic Research Framework</div>
-        <div class="product-tech mono">Python · Multi-Agent · Enterprise Security</div>
-        <p class="product-desc">Fully private, auto-adaptive multi-agent research environment. Decomposes complex scientific, regulatory, and commercial problems into coordinated autonomous agent workflows.</p>
-        <a href="https://github.com/Bakery-street-project/Polymorphic-Research-Framework" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">⚛️</div>
-        <div class="product-name">QaaS Platform</div>
-        <div class="product-tech mono">Python · Quantum-Inspired · White-Label</div>
-        <p class="product-desc">Quantum-Inspired Optimization as a Service. Mathematical optimization for logistics, financial modeling, and scientific computation. Enterprise pricing: $2,999/month.</p>
-        <a href="https://github.com/BoozeLee/qaas-platform" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">🔒</div>
-        <div class="product-name">CloudyMcCodeFace</div>
-        <div class="product-tech mono">Privacy-First UI · Zero Data Egress</div>
-        <p class="product-desc">Privacy-first AI coding assistant with enterprise-grade UI. The user-facing layer of AutomationCodex — powerful AI development tooling with no cloud dependency.</p>
-        <a href="https://github.com/Bakery-street-project/CloudyMcCodeFace" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-icon">🛡️</div>
-        <div class="product-name">ubuntu-live-security</div>
-        <div class="product-tech mono">Shell · Linux · Security Hardening</div>
-        <p class="product-desc">Linux security hardening toolkit for Ubuntu. Hardens development environments for sensitive AI workloads and private research operations. Privacy by default.</p>
-        <a href="https://github.com/BoozeLee/ubuntu-live-security" class="product-link" target="_blank">View Repo →</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PORTFOLIO -->
-  <section id="portfolio">
-    <div class="section-label reveal">Portfolio</div>
-    <h2 class="section-title display reveal">All <em>Projects</em></h2>
-    <p class="section-body reveal">Public-facing repositories. The majority of active development occurs in private.</p>
-    <div class="portfolio-list reveal">
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">NVIDIA NIM Cloud Service</div>
-          <span class="portfolio-tech-pill mono">NVIDIA NIM · Cloud</span>
-        </div>
-        <div class="portfolio-desc">Approved NVIDIA cloud infrastructure for optimized AI model inference. Production-grade backend powering the entire ecosystem.</div>
-        <span class="portfolio-status status-active">Active</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">AutomationCodex</div>
-          <span class="portfolio-tech-pill mono">Python · TypeScript</span>
-        </div>
-        <div class="portfolio-desc">Proprietary automation framework. Self-evolving template system at the core of Baker Street Project. Powers go-ai-coder, Amphetamemes, and more.</div>
-        <span class="portfolio-status status-active">Active</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">go-ai-coder</div>
-          <span class="portfolio-tech-pill mono">Go</span>
-        </div>
-        <div class="portfolio-desc">Enterprise-grade AI coding assistant. Local AI processing, GitHub integration, web scraping. Open-source template, enterprise ready.</div>
-        <span class="portfolio-status status-active">Active</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">Polymorphic Research Framework</div>
-          <span class="portfolio-tech-pill mono">Python · Multi-Agent</span>
-        </div>
-        <div class="portfolio-desc">Fully private, auto-adaptive multi-agent research environment with enterprise security. Autonomous problem decomposition.</div>
-        <span class="portfolio-status status-dev">In Development</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">QaaS Platform</div>
-          <span class="portfolio-tech-pill mono">Python</span>
-        </div>
-        <div class="portfolio-desc">Quantum-Inspired Optimization as a Service. White-label mathematical optimization at $2,999/month enterprise tier.</div>
-        <span class="portfolio-status status-dev">In Development</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">CloudyMcCodeFace</div>
-          <span class="portfolio-tech-pill mono">Privacy-First</span>
-        </div>
-        <div class="portfolio-desc">Privacy-first AI coding assistant with zero data egress. Enterprise UI for AutomationCodex.</div>
-        <span class="portfolio-status status-dev">In Development</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">ubuntu-live-security</div>
-          <span class="portfolio-tech-pill mono">Shell / Bash</span>
-        </div>
-        <div class="portfolio-desc">Linux security hardening toolkit. Privacy-focused system hardening for AI development environments.</div>
-        <span class="portfolio-status status-active">Active</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">Amphetamemes</div>
-          <span class="portfolio-tech-pill mono">Python</span>
-        </div>
-        <div class="portfolio-desc">AI-powered psychedelic art template marketplace. Self-evolving creative automation with AutomationCodex integration.</div>
-        <span class="portfolio-status status-dev">Beta</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">Sherlockian Research Squad</div>
-          <span class="portfolio-tech-pill mono">Multi-Agent AI</span>
-        </div>
-        <div class="portfolio-desc">Multi-agent investigative research framework. Systematic mystery decomposition with structured autonomous documentation.</div>
-        <span class="portfolio-status status-concept">Concept</span>
-      </div>
-      <div class="portfolio-item">
-        <div>
-          <div class="portfolio-name">AI Coding Agents</div>
-          <span class="portfolio-tech-pill mono">Go</span>
-        </div>
-        <div class="portfolio-desc">Complete AI coding agent ecosystem. Educational workshop and production-ready framework with GitHub integration.</div>
-        <span class="portfolio-status status-concept">Reference</span>
-      </div>
-    </div>
-    <a href="https://github.com/BoozeLee" class="portfolio-github" target="_blank">
-      Explore all 90+ repositories at <span>github.com/BoozeLee</span> and <span>github.com/Bakery-street-project</span> →
-    </a>
-  </section>
-
-  <!-- PRICING -->
-  <section id="monetization">
-    <div class="section-label reveal">Plans</div>
-    <h2 class="section-title display reveal">Support the <em>Mission</em></h2>
-    <p class="section-body reveal">From open-source community to enterprise partnership. Choose your tier.</p>
-    <div class="pricing-grid reveal">
-
-      <div class="pricing-card">
-        <div class="pricing-tier mono">Developer</div>
-        <div class="pricing-price display">Free</div>
-        <p class="pricing-desc">Open-source access to go-ai-coder and core AutomationCodex. Community support via Discord and Matrix.</p>
-        <ul class="pricing-features">
-          <li>go-ai-coder open-source access</li>
-          <li>Core AutomationCodex templates</li>
-          <li>Community Discord + Matrix</li>
-          <li>GitHub issue tracker</li>
-        </ul>
-        <a href="https://github.com/Bakery-street-project" class="pricing-cta pricing-cta-outline" target="_blank">View on GitHub</a>
-      </div>
-
-      <div class="pricing-card featured">
-        <div class="pricing-tier mono">Professional</div>
-        <div class="pricing-price display">$299 <span>/ month</span></div>
-        <p class="pricing-desc">Full AutomationCodex suite with NVIDIA NIM inference credits and GitHub CI/CD integration.</p>
-        <ul class="pricing-features">
-          <li>Full AutomationCodex suite</li>
-          <li>NVIDIA NIM inference credits</li>
-          <li>GitHub CI/CD integration</li>
-          <li>Priority technical support</li>
-          <li>Beta access to new tools</li>
-        </ul>
-        <a href="https://github.com/sponsors/BoozeLee" class="pricing-cta pricing-cta-solid" target="_blank">Sponsor on GitHub</a>
-      </div>
-
-      <div class="pricing-card">
-        <div class="pricing-tier mono">Enterprise</div>
-        <div class="pricing-price display">$2,999 <span>/ month</span></div>
-        <p class="pricing-desc">QaaS optimization, Polymorphic Research Engine, SLA, white-label, dedicated NIM endpoints.</p>
-        <ul class="pricing-features">
-          <li>QaaS quantum-inspired optimization</li>
-          <li>Polymorphic Research Engine access</li>
-          <li>Dedicated NVIDIA NIM endpoints</li>
-          <li>White-label licensing available</li>
-          <li>Custom agent development</li>
-          <li>On-premise deployment option</li>
-        </ul>
-        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="pricing-cta pricing-cta-outline">Contact Sales</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- LAB / RESEARCH -->
-  <section id="lab">
-    <div class="section-label reveal">Research Lab</div>
-    <h2 class="section-title display reveal">Beyond the <em>Frontier</em></h2>
-    <p class="section-body reveal">Baker Street Project applies AI to the hardest unsolved problems — not just the profitable ones.</p>
-    <div class="lab-grid reveal">
-      <div class="lab-card">
-        <div class="lab-tag mono">Research Track 1</div>
-        <div class="lab-title display">Disease & Medicine</div>
-        <p class="lab-body">Applying multi-agent AI systems to disease modeling, drug discovery pattern recognition, and clinical data synthesis — targeting breakthroughs that traditional pharmaceutical R&D timelines cannot achieve.</p>
-      </div>
-      <div class="lab-card">
-        <div class="lab-tag mono">Research Track 2</div>
-        <div class="lab-title display">Climate Intelligence</div>
-        <p class="lab-body">Using quantum-inspired optimization and multi-agent simulation to model climate systems, identify intervention leverage points, and accelerate evidence-based climate response at scale.</p>
-      </div>
-      <div class="lab-card">
-        <div class="lab-tag mono">Infrastructure</div>
-        <div class="lab-title display">AWS Bedrock Orchestration</div>
-        <p class="lab-body">Optimized multi-model orchestration for enterprise AI workloads using Anthropic and Meta models via AWS Bedrock. Production-ready patterns for complex agent coordination.</p>
-      </div>
-      <div class="lab-card">
-        <div class="lab-tag mono">Infrastructure</div>
-        <div class="lab-title display">Location Intelligence</div>
-        <p class="lab-body">Advanced geospatial risk analysis integrated with real-time financial data streams. Context-aware AI that understands the physical world, not just digital signals.</p>
-      </div>
-    </div>
-    <div class="research-note reveal">
-      <blockquote>"Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world."</blockquote>
-      <cite>— The operating philosophy of Baker Street Project</cite>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-inner reveal">
-      <div class="section-label" style="justify-content:center;">Contact</div>
-      <h2 class="section-title display">Let's Build<br /><em>Something Real</em></h2>
-      <p class="section-body" style="margin:16px auto 0;">
-        Investor? Partner? Enterprise client? We are raising a Seed round and actively seeking collaborators who understand that the next era of AI will be won by the most trusted infrastructure — not the largest cloud.
+    <section class="section" id="demo">
+      <h2>Real Glasshouse Demo (Coming Online)</h2>
+      <p class="section-sub">
+        We operate three large glasshouses in the Belgian countryside as a full‑time NVIDIA
+        robotics playground. This is where simulations meet real crops.
       </p>
-      <div class="contact-actions">
-        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="btn-primary">Send a Message →</a>
-        <a href="https://github.com/sponsors/BoozeLee" class="btn-ghost" target="_blank">Sponsor on GitHub</a>
+      <div class="demo-grid">
+        <div>
+          <p class="hero-lead">
+            As of early 2026, we are wiring up our first end‑to‑end NVIDIA pipeline:
+            Isaac Sim scenes that match our real glasshouses, Isaac ROS running on Jetson Orin,
+            and robots driving actual rows between plants.
+          </p>
+          <p class="hero-lead">Photos and video from the glasshouses will be added here as soon as we finalize the first stable demo run.</p>
+          <div class="demo-meta">
+            Planned media:
+            <ul class="clean" style="margin-top:8px;">
+              <li><strong>Short video:</strong> robot navigating rows and overlaying plant detections</li>
+              <li><strong>Photo series:</strong> hardware setup, Jetson Orin integration, sensor layout</li>
+              <li><strong>Technical blog:</strong> Isaac Sim → Isaac ROS → Jetson workflow in detail</li>
+            </ul>
+          </div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-label">Media Links</div>
+          <div class="demo-title">Add these once you have footage</div>
+          <ul class="clean">
+            <li><strong>Demo video:</strong> YouTube / Vimeo link — coming soon</li>
+            <li><strong>Photo gallery:</strong> GitHub Pages gallery — coming soon</li>
+            <li><strong>Technical write‑up:</strong> Blog / README — coming soon</li>
+          </ul>
+        </div>
       </div>
-      <div class="contact-links">
-        <div class="contact-link-item">
-          <span class="contact-link-label mono">Email</span>
-          <a href="mailto:kiliaan@bakerstreetproject221b.store" class="contact-link-value">kiliaan@bakerstreetproject221b.store</a>
-        </div>
-        <div class="contact-link-item">
-          <span class="contact-link-label mono">GitHub</span>
-          <a href="https://github.com/BoozeLee" class="contact-link-value" target="_blank">github.com/BoozeLee</a>
-        </div>
-        <div class="contact-link-item">
-          <span class="contact-link-label mono">Research</span>
-          <a href="https://orcid.org/0009-0007-3851-6327" class="contact-link-value" target="_blank">ORCID 0009-0007-3851-6327</a>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-brand">
-      <strong>Baker Street Project</strong> · Hasselt, Belgium · © 2026 · Pioneering Autonomous AI Infrastructure
-    </div>
-    <div class="footer-right">
-      <a href="https://github.com/Bakery-street-project" target="_blank">GitHub Org</a>
-      &nbsp;·&nbsp;
-      <a href="https://orcid.org/0009-0007-3851-6327" target="_blank">ORCID Research</a>
-      &nbsp;·&nbsp;
-      <a href="mailto:kiliaan@bakerstreetproject221b.store">kiliaan@bakerstreetproject221b.store</a>
-    </div>
-  </footer>
+    <section class="section" id="team">
+      <h2>Team</h2>
+      <p class="section-sub">Two people, one mission: ship real NVIDIA‑powered robots into real greenhouses.</p>
+      <div class="team-grid">
+        <div class="person">
+          <div class="person-role">Founder · Developer · Everything</div>
+          <div class="person-name">Kiliaan Vanvoorden</div>
+          <p class="person-body">
+            Builds the robots, writes the code, drives the strategy, ships the product.
+            3–5 years of hands-on AI/ML engineering on top of a lifetime working with computers since age three. Focused on NVIDIA Jetson, Linux systems, containerized deployments,
+            and the full Isaac Sim → Isaac ROS → Jetson pipeline for greenhouse robotics.
+            The entire engine of the project.
+          </p>
+          <p style="margin-top:10px;font-size:0.85rem;">
+            <a href="mailto:bakerstreetbandit@zohomail.eu">bakerstreetbandit@zohomail.eu</a>
+          </p>
+        </div>
+        <div class="person">
+          <div class="person-role">Co-founder · Communication &amp; Advisory</div>
+          <div class="person-name">Paulien Briers</div>
+          <p class="person-body">
+            Communication, narrative, and external relations. Advisory partner for
+            sponsorship, housing, and logistics. Supports funding outreach and commercial
+            conversations.
+          </p>
+          <p style="margin-top:10px;font-size:0.85rem;">
+            <a href="mailto:paulienbriers@zohomail.eu">paulienbriers@zohomail.eu</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2>Pilots, Partners, and Funding</h2>
+      <p class="section-sub">
+        Looking for: greenhouse operators, early‑stage investors, and technical partners
+        who want to push NVIDIA‑based robotics in agriculture.
+      </p>
+      <div class="grid-2">
+        <ul class="clean">
+          <li><strong>Pilot glasshouses.</strong> Operate greenhouses in Belgium / Netherlands? Test NVIDIA‑powered robots on‑site.</li>
+          <li><strong>Seed funding.</strong> Seed‑stage support to accelerate hardware builds, Isaac Sim environments, and Isaac ROS deployments.</li>
+          <li><strong>Research collaboration.</strong> Universities and labs interested in controlled experiments on real crops with Jetson / Isaac.</li>
+        </ul>
+        <div>
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px;">
+            <strong>Kiliaan Vanvoorden</strong> – Founder &amp; Robotics Engineer<br/>
+            <a href="mailto:bakerstreetbandit@zohomail.eu">bakerstreetbandit@zohomail.eu</a><br/><br/>
+            <strong>Paulien Briers</strong> – Communication &amp; Advisory<br/>
+            <a href="mailto:paulienbriers@zohomail.eu">paulienbriers@zohomail.eu</a>
+          </p>
+          <form class="contact-form" action="mailto:bakerstreetbandit@zohomail.eu" method="post" enctype="text/plain">
+            <input type="text" name="name" placeholder="Your name" required />
+            <input type="email" name="email" placeholder="Your email" required />
+            <textarea name="message" rows="3" placeholder="How would you like to collaborate?"></textarea>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+              <span class="icon">✉</span> Send message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Bakerstreet Project – NVIDIA‑Powered Agricultural Robotics</span>
+      <span>Site focused on greenhouse robotics. Other experiments live in separate repos.</span>
+    </footer>
+  </div>
 
   <script>
-    // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
+    const btn   = document.getElementById('theme-toggle');
+    const icon  = document.getElementById('theme-icon');
+    const label = document.getElementById('theme-label');
 
-    // Stagger children inside reveal containers
-    document.querySelectorAll('.products-grid, .pricing-grid, .lab-grid, .portfolio-list').forEach(grid => {
-      const children = grid.children;
-      Array.from(children).forEach((child, i) => {
-        child.style.transitionDelay = `${i * 0.07}s`;
-        if (!child.classList.contains('reveal')) {
-          child.style.opacity = '0';
-          child.style.transform = 'translateY(16px)';
-          child.style.transition = `opacity 0.6s ease ${i * 0.07}s, transform 0.6s ease ${i * 0.07}s`;
-        }
-      });
-    });
+    function applyTheme(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        icon.textContent  = '☀️';
+        label.textContent = 'Dark mode';
+      } else {
+        document.body.classList.remove('light');
+        icon.textContent  = '🌙';
+        label.textContent = 'Light mode';
+      }
+    }
 
-    // Trigger staggered children when parent reveals
-    const parentObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          Array.from(entry.target.children).forEach(child => {
-            child.style.opacity = '1';
-            child.style.transform = 'translateY(0)';
-          });
-          parentObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.products-grid, .pricing-grid, .lab-grid, .portfolio-list').forEach(g => parentObserver.observe(g));
+    applyTheme(localStorage.getItem('bakerstreet-theme') || 'dark');
 
-    // Active nav link
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - 100) current = sec.getAttribute('id');
-      });
-      navLinks.forEach(link => {
-        link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--gold)' : '';
-      });
+    btn.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem('bakerstreet-theme', next);
     });
   </script>
 </body>
