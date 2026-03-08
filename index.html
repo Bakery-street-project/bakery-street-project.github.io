@@ -16,18 +16,18 @@
       --gold: #C8A84B;
       --gold2: #E8C86A;
       --gold-dim: #7a6529;
+      --red: #8B2A2A;
+      --red-bright: #C84A4A;
+      --red-dim: #5A1A1A;
       --fog: #8A9099;
       --mist: #C2C8D0;
       --white: #F0EDE6;
       --navy: #1A3A5C;
       --green: #2A6B3C;
-      --red: #8B2A2A;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--ink);
       color: var(--white);
@@ -51,14 +51,13 @@
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--ink); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
 
     /* ── TYPOGRAPHY ── */
     .display { font-family: 'DM Serif Display', serif; }
     .mono { font-family: 'JetBrains Mono', monospace; }
-
     a { color: inherit; text-decoration: none; }
-    a:hover { color: var(--gold); }
+    a:hover { color: var(--red-bright); }
 
     /* ── NAV ── */
     nav {
@@ -111,18 +110,18 @@
       color: var(--fog);
     }
     .nav-links a { transition: color 0.2s; }
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover { color: var(--red-bright); }
     .nav-cta {
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 8px 20px;
-      border: 1px solid var(--gold);
-      color: var(--gold);
+      border: 1px solid var(--red);
+      color: var(--red-bright);
       transition: all 0.2s;
     }
-    .nav-cta:hover { background: var(--gold); color: var(--ink); }
+    .nav-cta:hover { background: var(--red); color: var(--white); }
 
     /* ── HERO ── */
     #hero {
@@ -134,34 +133,30 @@
       position: relative;
       overflow: hidden;
     }
-
     .hero-grid-bg {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(139,42,42,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,42,42,0.03) 1px, transparent 1px);
       background-size: 64px 64px;
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
     }
-
     .hero-glow {
       position: absolute;
       top: 20%; left: -10%;
       width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(139,42,42,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
     .hero-glow2 {
       position: absolute;
       bottom: 0; right: -5%;
       width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(26,58,92,0.3) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
       pointer-events: none;
     }
-
     .hero-content { position: relative; max-width: 900px; }
-
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -170,10 +165,10 @@
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--red-bright);
       padding: 6px 14px;
-      border: 1px solid rgba(200,168,75,0.3);
-      background: rgba(200,168,75,0.05);
+      border: 1px solid rgba(139,42,42,0.4);
+      background: rgba(139,42,42,0.08);
       margin-bottom: 32px;
       opacity: 0;
       animation: fadeUp 0.8s 0.2s ease forwards;
@@ -192,7 +187,10 @@
     }
     h1.hero-title em {
       font-style: italic;
-      color: var(--gold);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--red-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-sub {
@@ -204,7 +202,6 @@
       opacity: 0;
       animation: fadeUp 0.9s 0.5s ease forwards;
     }
-
     .hero-actions {
       margin-top: 48px;
       display: flex;
@@ -218,16 +215,17 @@
       align-items: center;
       gap: 8px;
       padding: 14px 28px;
-      background: var(--gold);
-      color: var(--ink);
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-bright) 100%);
+      color: var(--white);
       font-family: 'Syne', sans-serif;
       font-weight: 700;
       font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(139,42,42,0.3);
     }
-    .btn-primary:hover { background: var(--gold2); color: var(--ink); transform: translateY(-1px); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(139,42,42,0.4); }
     .btn-ghost {
       display: inline-flex;
       align-items: center;
@@ -242,7 +240,7 @@
       text-transform: uppercase;
       transition: all 0.2s;
     }
-    .btn-ghost:hover { border-color: var(--gold); background: rgba(200,168,75,0.08); color: var(--gold); }
+    .btn-ghost:hover { border-color: var(--red-bright); background: rgba(139,42,42,0.08); color: var(--red-bright); }
 
     .hero-stats {
       margin-top: 72px;
@@ -253,13 +251,16 @@
     }
     .hero-stat {
       padding: 20px 32px;
-      border-left: 1px solid rgba(200,168,75,0.2);
+      border-left: 1px solid rgba(139,42,42,0.3);
     }
     .hero-stat:first-child { padding-left: 0; border-left: none; }
     .hero-stat-value {
       font-family: 'DM Serif Display', serif;
       font-size: 36px;
-      color: var(--gold);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--red-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       line-height: 1;
     }
     .hero-stat-label {
@@ -270,7 +271,6 @@
       color: var(--fog);
       margin-top: 4px;
     }
-
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
@@ -279,7 +279,7 @@
     /* ── NVIDIA BADGE STRIP ── */
     .nvidia-strip {
       background: var(--ink2);
-      border-top: 1px solid rgba(200,168,75,0.15);
+      border-top: 1px solid rgba(139,42,42,0.2);
       border-bottom: 1px solid rgba(200,168,75,0.15);
       padding: 20px 48px;
       display: flex;
@@ -322,7 +322,7 @@
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--red-bright);
       margin-bottom: 16px;
       display: flex;
       align-items: center;
@@ -332,7 +332,7 @@
       content: '';
       display: inline-block;
       width: 32px; height: 1px;
-      background: var(--gold);
+      background: var(--red);
     }
     h2.section-title {
       font-family: 'DM Serif Display', serif;
@@ -341,7 +341,13 @@
       color: var(--white);
       margin-bottom: 16px;
     }
-    h2.section-title em { font-style: italic; color: var(--gold); }
+    h2.section-title em { 
+      font-style: italic; 
+      background: linear-gradient(135deg, var(--gold) 0%, var(--red-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
     .section-body {
       font-size: 16px;
       line-height: 1.8;
@@ -349,23 +355,13 @@
       max-width: 580px;
     }
 
-    /* ── ABOUT ── */
-    #about {
-      background: var(--ink2);
-    }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-      max-width: 1200px;
-    }
-    .about-right {
-      padding-top: 20px;
-    }
+    /* Rest of CSS stays the same as before, but replace gold accent hover states with red */
+    #about { background: var(--ink2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; max-width: 1200px; }
+    .about-right { padding-top: 20px; }
     .founder-card {
       background: var(--ink3);
-      border: 1px solid rgba(200,168,75,0.15);
+      border: 1px solid rgba(139,42,42,0.2);
       padding: 32px;
       margin-top: 32px;
       position: relative;
@@ -374,8 +370,8 @@
       content: '221B';
       position: absolute;
       top: -1px; right: 24px;
-      background: var(--gold);
-      color: var(--ink);
+      background: var(--red);
+      color: var(--white);
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       font-weight: 700;
@@ -391,34 +387,29 @@
     .founder-alias {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
-      color: var(--gold);
+      color: var(--red-bright);
       letter-spacing: 0.1em;
       margin-bottom: 16px;
     }
     .founder-bio { font-size: 14px; color: var(--fog); line-height: 1.7; }
-    .founder-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 20px;
-    }
+    .founder-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .tag {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       padding: 4px 10px;
-      border: 1px solid rgba(200,168,75,0.25);
-      color: var(--gold);
-      background: rgba(200,168,75,0.05);
+      border: 1px solid rgba(139,42,42,0.3);
+      color: var(--red-bright);
+      background: rgba(139,42,42,0.08);
     }
 
-    /* ── PRODUCTS ── */
+    /* Updated products section */
     #technology { background: var(--ink); }
     .products-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      background: rgba(200,168,75,0.1);
-      border: 1px solid rgba(200,168,75,0.1);
+      background: rgba(139,42,42,0.15);
+      border: 1px solid rgba(139,42,42,0.15);
       margin-top: 60px;
     }
     .product-card {
@@ -433,7 +424,7 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       height: 2px;
-      background: var(--gold);
+      background: linear-gradient(90deg, var(--red) 0%, var(--gold) 100%);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.4s ease;
@@ -441,7 +432,7 @@
     .product-card:hover { background: var(--ink3); }
     .product-card:hover::after { transform: scaleX(1); }
     .product-card.featured {
-      background: linear-gradient(135deg, rgba(200,168,75,0.06) 0%, var(--ink3) 100%);
+      background: linear-gradient(135deg, rgba(139,42,42,0.08) 0%, var(--ink3) 100%);
     }
     .product-card.featured::before {
       content: 'FLAGSHIP';
@@ -450,13 +441,13 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 9px;
       letter-spacing: 0.15em;
-      color: var(--gold);
-      border: 1px solid rgba(200,168,75,0.3);
+      color: var(--red-bright);
+      border: 1px solid rgba(139,42,42,0.4);
       padding: 3px 8px;
     }
     .product-icon {
       width: 44px; height: 44px;
-      border: 1px solid rgba(200,168,75,0.25);
+      border: 1px solid rgba(139,42,42,0.3);
       display: flex; align-items: center; justify-content: center;
       font-size: 20px;
       margin-bottom: 24px;
@@ -472,7 +463,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
       letter-spacing: 0.1em;
-      color: var(--gold);
+      color: var(--red-bright);
       text-transform: uppercase;
       margin-bottom: 14px;
     }
@@ -486,23 +477,23 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       letter-spacing: 0.1em;
-      color: var(--gold);
+      color: var(--red-bright);
       text-transform: uppercase;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: gap 0.2s;
     }
-    .product-link:hover { color: var(--gold2); gap: 10px; }
+    .product-link:hover { color: var(--gold); gap: 10px; }
 
-    /* ── PORTFOLIO ── */
+    /* Continue with portfolio, pricing, lab, contact, footer - same structure but red accents */
     #portfolio { background: var(--ink2); }
     .portfolio-list {
       margin-top: 60px;
       display: flex;
       flex-direction: column;
       gap: 0;
-      border: 1px solid rgba(200,168,75,0.12);
+      border: 1px solid rgba(139,42,42,0.15);
     }
     .portfolio-item {
       display: grid;
@@ -510,11 +501,11 @@
       gap: 32px;
       align-items: center;
       padding: 24px 32px;
-      border-bottom: 1px solid rgba(200,168,75,0.08);
+      border-bottom: 1px solid rgba(139,42,42,0.08);
       transition: background 0.2s;
     }
     .portfolio-item:last-child { border-bottom: none; }
-    .portfolio-item:hover { background: rgba(200,168,75,0.04); }
+    .portfolio-item:hover { background: rgba(139,42,42,0.05); }
     .portfolio-name {
       font-weight: 700;
       font-size: 15px;
@@ -524,8 +515,8 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
       padding: 2px 8px;
-      border: 1px solid rgba(200,168,75,0.2);
-      color: var(--gold);
+      border: 1px solid rgba(139,42,42,0.25);
+      color: var(--red-bright);
       margin-top: 4px;
       display: inline-block;
     }
@@ -543,7 +534,7 @@
       letter-spacing: 0.08em;
     }
     .status-active { color: #4CAF50; border: 1px solid rgba(76,175,80,0.3); background: rgba(76,175,80,0.06); }
-    .status-dev { color: var(--gold); border: 1px solid rgba(200,168,75,0.3); background: rgba(200,168,75,0.06); }
+    .status-dev { color: var(--red-bright); border: 1px solid rgba(139,42,42,0.3); background: rgba(139,42,42,0.06); }
     .status-concept { color: var(--fog); border: 1px solid rgba(138,144,153,0.3); }
     .portfolio-github {
       display: block;
@@ -555,10 +546,9 @@
       color: var(--fog);
       text-transform: uppercase;
     }
-    .portfolio-github span { color: var(--gold); }
-    .portfolio-github:hover { color: var(--gold); }
+    .portfolio-github span { color: var(--red-bright); }
+    .portfolio-github:hover { color: var(--red-bright); }
 
-    /* ── PRICING ── */
     #monetization { background: var(--ink); }
     .pricing-grid {
       display: grid;
@@ -567,24 +557,24 @@
       margin-top: 60px;
     }
     .pricing-card {
-      border: 1px solid rgba(200,168,75,0.15);
+      border: 1px solid rgba(139,42,42,0.2);
       padding: 40px 32px;
       background: var(--ink2);
       position: relative;
       transition: border-color 0.3s;
     }
-    .pricing-card:hover { border-color: rgba(200,168,75,0.4); }
+    .pricing-card:hover { border-color: rgba(139,42,42,0.5); }
     .pricing-card.featured {
-      border-color: var(--gold);
-      background: linear-gradient(160deg, rgba(200,168,75,0.07) 0%, var(--ink2) 60%);
+      border-color: var(--red);
+      background: linear-gradient(160deg, rgba(139,42,42,0.08) 0%, var(--ink2) 60%);
     }
     .pricing-card.featured::before {
       content: 'Most Popular';
       position: absolute;
       top: -1px; left: 50%;
       transform: translateX(-50%);
-      background: var(--gold);
-      color: var(--ink);
+      background: var(--red);
+      color: var(--white);
       font-family: 'Syne', sans-serif;
       font-weight: 700;
       font-size: 10px;
@@ -598,7 +588,7 @@
       font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--red-bright);
       margin-bottom: 12px;
     }
     .pricing-price {
@@ -636,7 +626,7 @@
     }
     .pricing-features li::before {
       content: '→';
-      color: var(--gold);
+      color: var(--red-bright);
       flex-shrink: 0;
       margin-top: 1px;
     }
@@ -652,17 +642,16 @@
       transition: all 0.2s;
     }
     .pricing-cta-outline {
-      border: 1px solid rgba(200,168,75,0.35);
-      color: var(--gold);
+      border: 1px solid rgba(139,42,42,0.4);
+      color: var(--red-bright);
     }
-    .pricing-cta-outline:hover { background: rgba(200,168,75,0.08); border-color: var(--gold); }
+    .pricing-cta-outline:hover { background: rgba(139,42,42,0.08); border-color: var(--red); }
     .pricing-cta-solid {
-      background: var(--gold);
-      color: var(--ink);
+      background: var(--red);
+      color: var(--white);
     }
-    .pricing-cta-solid:hover { background: var(--gold2); }
+    .pricing-cta-solid:hover { background: var(--red-bright); }
 
-    /* ── LAB ── */
     #lab { background: var(--ink2); }
     .lab-grid {
       display: grid;
@@ -672,27 +661,27 @@
     }
     .lab-card {
       padding: 32px;
-      border: 1px solid rgba(200,168,75,0.1);
+      border: 1px solid rgba(139,42,42,0.15);
       background: var(--ink);
       position: relative;
       overflow: hidden;
       transition: border-color 0.3s;
     }
-    .lab-card:hover { border-color: rgba(200,168,75,0.3); }
+    .lab-card:hover { border-color: rgba(139,42,42,0.4); }
     .lab-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0;
       width: 3px; height: 100%;
-      background: var(--gold);
-      opacity: 0.4;
+      background: var(--red);
+      opacity: 0.5;
     }
     .lab-tag {
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--red-bright);
       margin-bottom: 16px;
     }
     .lab-title {
@@ -706,8 +695,8 @@
     .research-note {
       margin-top: 48px;
       padding: 32px 40px;
-      border: 1px solid rgba(200,168,75,0.2);
-      background: rgba(200,168,75,0.04);
+      border: 1px solid rgba(139,42,42,0.25);
+      background: rgba(139,42,42,0.05);
       position: relative;
     }
     .research-note::before {
@@ -716,7 +705,7 @@
       top: 16px; left: 32px;
       font-family: 'DM Serif Display', serif;
       font-size: 72px;
-      color: rgba(200,168,75,0.15);
+      color: rgba(139,42,42,0.2);
       line-height: 1;
     }
     .research-note blockquote {
@@ -733,11 +722,10 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       letter-spacing: 0.1em;
-      color: var(--gold);
+      color: var(--red-bright);
       padding-left: 20px;
     }
 
-    /* ── CONTACT ── */
     #contact {
       background: var(--ink);
       text-align: center;
@@ -775,15 +763,14 @@
     }
     .contact-link-value {
       font-size: 14px;
-      color: var(--gold);
+      color: var(--red-bright);
       transition: color 0.2s;
     }
-    .contact-link-value:hover { color: var(--gold2); }
+    .contact-link-value:hover { color: var(--gold); }
 
-    /* ── FOOTER ── */
     footer {
       background: var(--ink2);
-      border-top: 1px solid rgba(200,168,75,0.15);
+      border-top: 1px solid rgba(139,42,42,0.2);
       padding: 32px 48px;
       display: flex;
       align-items: center;
@@ -798,7 +785,7 @@
       text-transform: uppercase;
       color: var(--fog);
     }
-    .footer-brand strong { color: var(--gold); }
+    .footer-brand strong { color: var(--red-bright); }
     .footer-right {
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
@@ -806,10 +793,9 @@
       text-transform: uppercase;
       color: var(--fog);
     }
-    .footer-right a { color: var(--gold-dim); transition: color 0.2s; }
-    .footer-right a:hover { color: var(--gold); }
+    .footer-right a { color: var(--red-dim); transition: color 0.2s; }
+    .footer-right a:hover { color: var(--red-bright); }
 
-    /* ── REVEAL ANIMATIONS ── */
     .reveal {
       opacity: 0;
       transform: translateY(20px);
@@ -817,7 +803,6 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
       .nav-links { display: none; }
@@ -837,7 +822,6 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <div class="nav-logo">
       <div class="nav-logo-mark">B</div>
@@ -850,10 +834,9 @@
       <li><a href="#monetization">Plans</a></li>
       <li><a href="#lab">Research</a></li>
     </ul>
-    <a class="nav-cta" href="mailto:kiliaan@bakerstreetproject221b.store">Contact Us</a>
+    <a class="nav-cta" href="mailto:bakerstreetbandit@zohomail.com">Contact Us</a>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <div class="hero-grid-bg"></div>
     <div class="hero-glow"></div>
@@ -868,7 +851,7 @@
       </p>
       <div class="hero-actions">
         <a href="#portfolio" class="btn-primary">Explore Projects →</a>
-        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="btn-ghost">Get in Touch</a>
+        <a href="mailto:bakerstreetbandit@zohomail.com" class="btn-ghost">Get in Touch</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
@@ -891,7 +874,6 @@
     </div>
   </section>
 
-  <!-- NVIDIA STRIP -->
   <div class="nvidia-strip">
     <span class="nvidia-strip-label">Credentials</span>
     <div class="nvidia-badges">
@@ -903,7 +885,6 @@
     </div>
   </div>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="about-grid reveal">
       <div class="about-left">
@@ -938,7 +919,6 @@
     </div>
   </section>
 
-  <!-- TECHNOLOGY -->
   <section id="technology">
     <div class="section-label reveal">Technology</div>
     <h2 class="section-title display reveal">The <em>AutomationCodex</em><br />Ecosystem</h2>
@@ -996,7 +976,6 @@
     </div>
   </section>
 
-  <!-- PORTFOLIO -->
   <section id="portfolio">
     <div class="section-label reveal">Portfolio</div>
     <h2 class="section-title display reveal">All <em>Projects</em></h2>
@@ -1088,7 +1067,6 @@
     </a>
   </section>
 
-  <!-- PRICING -->
   <section id="monetization">
     <div class="section-label reveal">Plans</div>
     <h2 class="section-title display reveal">Support the <em>Mission</em></h2>
@@ -1134,13 +1112,12 @@
           <li>Custom agent development</li>
           <li>On-premise deployment option</li>
         </ul>
-        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="pricing-cta pricing-cta-outline">Contact Sales</a>
+        <a href="mailto:bakerstreetbandit@zohomail.com" class="pricing-cta pricing-cta-outline">Contact Sales</a>
       </div>
 
     </div>
   </section>
 
-  <!-- LAB / RESEARCH -->
   <section id="lab">
     <div class="section-label reveal">Research Lab</div>
     <h2 class="section-title display reveal">Beyond the <em>Frontier</em></h2>
@@ -1173,7 +1150,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="contact-inner reveal">
       <div class="section-label" style="justify-content:center;">Contact</div>
@@ -1182,13 +1158,13 @@
         Investor? Partner? Enterprise client? We are raising a Seed round and actively seeking collaborators who understand that the next era of AI will be won by the most trusted infrastructure — not the largest cloud.
       </p>
       <div class="contact-actions">
-        <a href="mailto:kiliaan@bakerstreetproject221b.store" class="btn-primary">Send a Message →</a>
+        <a href="mailto:bakerstreetbandit@zohomail.com" class="btn-primary">Send a Message →</a>
         <a href="https://github.com/sponsors/BoozeLee" class="btn-ghost" target="_blank">Sponsor on GitHub</a>
       </div>
       <div class="contact-links">
         <div class="contact-link-item">
           <span class="contact-link-label mono">Email</span>
-          <a href="mailto:kiliaan@bakerstreetproject221b.store" class="contact-link-value">kiliaan@bakerstreetproject221b.store</a>
+          <a href="mailto:bakerstreetbandit@zohomail.com" class="contact-link-value">bakerstreetbandit@zohomail.com</a>
         </div>
         <div class="contact-link-item">
           <span class="contact-link-label mono">GitHub</span>
@@ -1202,7 +1178,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-brand">
       <strong>Baker Street Project</strong> · Hasselt, Belgium · © 2026 · Pioneering Autonomous AI Infrastructure
@@ -1212,12 +1187,11 @@
       &nbsp;·&nbsp;
       <a href="https://orcid.org/0009-0007-3851-6327" target="_blank">ORCID Research</a>
       &nbsp;·&nbsp;
-      <a href="mailto:kiliaan@bakerstreetproject221b.store">kiliaan@bakerstreetproject221b.store</a>
+      <a href="mailto:bakerstreetbandit@zohomail.com">bakerstreetbandit@zohomail.com</a>
     </div>
   </footer>
 
   <script>
-    // Reveal on scroll
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1229,7 +1203,6 @@
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
 
-    // Stagger children inside reveal containers
     document.querySelectorAll('.products-grid, .pricing-grid, .lab-grid, .portfolio-list').forEach(grid => {
       const children = grid.children;
       Array.from(children).forEach((child, i) => {
@@ -1242,7 +1215,6 @@
       });
     });
 
-    // Trigger staggered children when parent reveals
     const parentObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1256,7 +1228,6 @@
     }, { threshold: 0.05 });
     document.querySelectorAll('.products-grid, .pricing-grid, .lab-grid, .portfolio-list').forEach(g => parentObserver.observe(g));
 
-    // Active nav link
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
     window.addEventListener('scroll', () => {
@@ -1265,7 +1236,7 @@
         if (window.scrollY >= sec.offsetTop - 100) current = sec.getAttribute('id');
       });
       navLinks.forEach(link => {
-        link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--gold)' : '';
+        link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--red-bright)' : '';
       });
     });
   </script>
