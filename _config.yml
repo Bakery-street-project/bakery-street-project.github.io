@@ -1,0 +1,37 @@
+title: Bakerstreet Labs
+tagline: Production-Ready AI Agents & Automation Infrastructure
+description: >
+  We build practical, local-first AI tooling — multi-agent systems, LLM automation,
+  and AI infrastructure that runs without cloud dependency.
+url: "https://bakery-street-project.github.io"
+baseurl: ""
+repository: Bakery-street-project/bakery-street-project.github.io
+
+author:
+  name: Kiliaan Vanvoorden
+  location: Hasselt, Belgium
+  email: bakerstreetbandit@zohomail.eu
+
+social:
+  github: Bakery-street-project
+  email: bakerstreetbandit@zohomail.eu
+
+theme: null
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+markdown: GFM
+highlighter: rouge
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
