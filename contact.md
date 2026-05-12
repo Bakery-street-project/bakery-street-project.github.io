@@ -25,7 +25,7 @@ title: Contact
 <section class="contact-links">
   <div class="contact-item">
     <span class="contact-label">Email</span>
-    <a href="mailto:bakerstreetbandit@zohomail.eu">bakerstreetbandit@zohomail.eu</a>
+    <a href="mailto:kiliaanv2@gmail.com">kiliaanv2@gmail.com</a>
   </div>
   <div class="contact-item">
     <span class="contact-label">GitHub</span>
