@@ -35,7 +35,7 @@ defaults:
 collections:
   notes:
     output: true
-    permalink: /notes/:title/
+    permalink: /:collection/:slug/
 
 exclude:
   - Gemfile
