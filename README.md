@@ -1,10 +1,35 @@
-# Bakerstreet Labs Website
+# bakery-street-project.github.io
 
-Official organization website — built with Jekyll and hosted on GitHub Pages.
+Engineering portfolio and notes for [Bakery-street-project](https://github.com/Bakery-street-project).
 
-**URL:** https://bakery-street-project.github.io
+Built with [Jekyll](https://jekyllrb.com/) and deployed on [GitHub Pages](https://pages.github.com/).
 
----
+## Local Development
 
-**Watermark:** `BAKERSTREET-LABS-2025`  
-**© 2025-2026 Bakerstreet Labs · Bakery Street Project · ALL RIGHTS RESERVED**
+```bash
+# Install dependencies
+bundle install
+
+# Serve locally
+bundle exec jekyll serve
+
+# Build for production
+bundle exec jekyll build
+```
+
+## Structure
+
+- `_pages/` — About, Projects, Notes pages
+- `_posts/` — Blog posts (optional)
+- `_notes/` — Technical notes collection
+- `_data/` — Navigation and site data
+- `assets/` — CSS, JS, images
+- `.github/workflows/` — CI/CD for build and prose linting
+
+## Deployment
+
+Automatic deployment on push to `main` via GitHub Actions.
+
+## License
+
+MIT

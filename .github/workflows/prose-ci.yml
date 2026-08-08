@@ -1,0 +1,38 @@
+name: Prose CI
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - '**.md'
+      - '**.markdown'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - '**.md'
+      - '**.markdown'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run markdownlint
+        uses: actionshub/markdownlint@v1
+        with:
+          files: '**.md'
+
+      - name: Check links
+        run: |
+          npm install -g markdown-link-check
+          find . -name '*.md' -not -path './node_modules/*' -exec markdown-link-check -q {} \;
+
+      - name: Spellcheck
+        uses: rojopolis/spellcheck-action@0.34.0
+        with:
+          config_path: .spellcheck.yml
+          source_files: '**.md'
+          check_only: true

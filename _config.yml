@@ -1,37 +1,66 @@
-title: Bakerstreet Labs
-tagline: Production-Ready AI Agents & Automation Infrastructure
-description: >
-  We build practical, local-first AI tooling — multi-agent systems, LLM automation,
-  and AI infrastructure that runs without cloud dependency.
+title: "Bakery Street Project"
+description: "AI-agent engineering studio — research, prototypes, and production systems."
 url: "https://bakery-street-project.github.io"
 baseurl: ""
-repository: Bakery-street-project/bakery-street-project.github.io
+repository: "Bakery-street-project/bakery-street-project.github.io"
 
 author:
-  name: Kiliaan Vanvoorden
-  location: Hasselt, Belgium
-  email: kiliaanv2@gmail.com
+  name: "Kiliaan Vanvoorden"
+  email: "bakerstreetbandit@zohomail.eu"
+  url: "https://github.com/BoozeLee"
+  linkedin: "https://linkedin.com/in/kiliaanvanvoorden"
 
-social:
-  github: Bakery-street-project
-  email: kiliaanv2@gmail.com
-
-theme: null
-plugins:
-  - jekyll-seo-tag
-  - jekyll-sitemap
-
-markdown: GFM
+markdown: kramdown
 highlighter: rouge
+permalink: /:year/:month/:day/:title/
+
+sass:
+  style: compressed
+
+feed:
+  path: feed.xml
+
+sitemap:
+  priority: 0.5
+  lastmod: 2026-01-01
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: default
+      author_profile: true
+
+collections:
+  notes:
+    output: true
+    permalink: /notes/:title/
 
 exclude:
   - Gemfile
   - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .sass-cache/
+  - .jekyll-cache/
+  - _site/
+  - .github/
+  - .git/
   - README.md
-  - vendor
 
-defaults:
-  - scope:
-      path: ""
-    values:
-      layout: default
+include:
+  - _pages
+  - _posts
+  - _notes
+
+# Social / SEO
+social:
+  name: "Kiliaan Vanvoorden"
+  links:
+    - https://github.com/BoozeLee
+    - https://linkedin.com/in/kiliaanvanvoorden
+    - mailto:bakerstreetbandit@zohomail.eu

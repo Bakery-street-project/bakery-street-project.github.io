@@ -1,0 +1,9 @@
+# Bakery Street Project
+
+AI-agent engineering studio — research, prototypes, and production systems by Kiliaan Vanvoorden.
+
+## Links
+
+- GitHub: [@BoozeLee](https://github.com/BoozeLee)
+- LinkedIn: [kiliaanvanvoorden](https://linkedin.com/in/kiliaanvanvoorden)
+- Email: [bakerstreetbandit@zohomail.eu](mailto:bakerstreetbandit@zohomail.eu)
